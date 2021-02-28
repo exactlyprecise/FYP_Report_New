@@ -62,21 +62,44 @@ Special thanks to my research supervisor, Prof. Subhroshekhar Ghosh, for guiding
 
 \chapter{Introduction}
 
-This is a chapter.
+\section{Supervised Learning}
+Given a set of (training) datapoints $\{(x_1,y_1), ..., (x_n,y_n)\}$ where $x_i \in \RR^d$ and $y_i \in \RR$ for $1 \leq i \leq n$, and assuming $(x_i, y_i)$ were independent and identically distributed variables drawn from a probability distribution $Q$, we want to find a predictor function $h_n:\RR^d \rightarrow \RR$ that predicts $y$ "well" given $x$ that has not been seen.\\
+To represent how well this function predicts, let $l$ represent a loss function. Examples include the squared-loss function $l(y,\hat{y}) = (\hat{y} - y)^2$, and the 0-1 loss, usually used for classification: $l(\hat{y},y) = 1_{\hat{y} \neq y}$.\\
+The general goal of (supervised) machine learning to find a function $h$ that minimizes the expected loss: $\EE_{x,y}[l(h(x), y)]$.\\
+In Empirical Risk Minimization (ERM), given datapoints $\{(x_1,y_1), ..., (x_n,y_n)\}$, the goal is to find a function $h_n$ in some class of function $\HH$  to minimize the empirical risk: 
+\[L_{emp}(h_n) = \frac{1}{n} \sum_{i=1}^{n} l(h_n(x_i), y_i). \]
+Intuitively, if a function $h_n$ does not predict training data well (has a high $L_{emp}(h_n)$), this would tell us that it will not predict other $(x,y)$ samples drawn randomly as well. 
 
-\section{Overview}
-
-You can embed sections and subsections.
+The empirical risk minimizer, $\hat{h}: \RR^d \rightarrow \RR$ is then defined by:
+\[ \hat{h_n} = \arg\min_{h_n \in \HH} L_{emp}(h_n). \]
+Classically, there are reasons why one does not tend to choose a function $h_n$ that reduces the empirical loss to near zero values, typically due to bounds on the generalization gap.
 
 \section{Bias Variance Tradeoff}
-WYSIWYG
+We define the generalization error (or sometimes known as the generalization gap) as difference between the empirical and expected classifier loss, i.e. $ \abs{ \EE_{x,y}[l(\hat{h_n}(x), y)] - L_{emp}(\hat{h_n}) } $. It would make sense to decrease this gap to as little as possible.\\
+Many classical bounds have this generalization gap is a form of:
+\begin{equation}
+\EE_{x,y}[l(\hat{h_n}(x), y)] \leq L_{emp}(\hat{h_n}) + O(\sqrt{c/n})
+\end{equation}
+where $c$ is some  measure of the complexity of $\HH$, for example the fat-shattering dimension, VC-dimension, Rademacher complexity, etc. The general result being that, with a greater complexity of the function class $\HH$, the greater the upper bound of this generalization gap. However, if $\HH$ is not complex enough, we may not find any function $\hat{h_n} \in \HH$ that reduces the empirical risk sufficiently (underfitting). Hence, classical algorithms try to find a balance between over and underfitting, decreasing the expected loss by controlling $\HH$, either explicitly or implicitly.
+For example, to change the complexity of $\HH$ explicitly, one might choose a simpler or more complicated architecture for a neural network. To reduce the complexity of $\HH$ implicitly, one might user regularization to  penalize coefficients to limit the model complexity, or simply stop the training algorithm prematurely (early stopping).
 
-\subsection{Research Question}
+This classical curve from \cite{Belkin_2019} is shown in Figure \ref{fig:Classical_Descent}.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{"Images/Classical_Descent.png}
+	\par
+	\caption{Curve showing how the training and test risk changes with respect to the capacity of $\HH$. The test risk results from bias-variance tradeoff, and the Capacity of $\HH$ is selected at the sweet spot.} \label{fig:Classical_Descent}
+\end{figure}
 
-Is `\LaTeX' pronounced \phonet{let\super hEk\super h} or \phonet{lat\super hEk\super h}?
+\section{Modern Machine Learning}
+In a paper by \cite{Zhang_Deep_Learning}, examples were given where  deep neural networks were trained to the point of little to no training error. Different architectures were tested on the CIFAR10 dataset (\cite{krizhevsky2009learning}) and ImageNet dataset (\cite{Russakovsky_2015}). However, very accurate predictions on the new data was given.\\
+In \cite{Alfredo2016}, the architectures used on ImageNet have large amounts of parameters, multiple times bigger than the number of training datapoints.
 
-\chapter{Modern ML Examples}
-	
+\section{Research Question}
+
+Indeed, it is still unanswered as to why these overparameterized data do not seem to cause high test loss due to overfitting. The papers discussed further show empirically that this property is not exclusive to deep learning, but also seems to appear in learning for kernel machines as well. This will be followed by a plausible explanation on how the classical bias-variance tradeoff graph can be reconciled with modern methods.\\
+We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spaces.
+
 \chapter{Kernels}
 	\section{Notation}
 	We use the symbol $\KK$  when it can refer to both $\RR$ or $\CC$. Also, let $z^*$ or $(z)^*$ denote the conjugate of $z$ for any $z \in \CC$.
@@ -259,6 +282,9 @@ Is `\LaTeX' pronounced \phonet{let\super hEk\super h} or \phonet{lat\super hEk\s
 		\end{split}
 		\end{equation*}
 	\end{proof}
+
+\chapter{Overfitted and Interpolated Kernel Classifiers}
+We shall give experimental results performed in \cite{UnderstandKernel} that show the strong generalization performance also appears in kernel classifiers.
 	
 \chapter{Approximation and Estimation}
 	\section{Notations} \label{sec:Notations}
@@ -680,7 +706,7 @@ We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, 
 	\EE[z_w(x)z_y(y)] &= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}]
 	+ \frac{1}{2}k(x-y) + \frac{1}{2}[k(x-y)]^* \\
 	&= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}] + k(x-y)
-	\end{split}Be sure to keep it under 300 words \citep{ell-ht-format}.
+	\end{split}
 	\end{equation*}
 	For real kernel , $k(x - y) = (k(x - y))^*$.
 	\begin{equation*}

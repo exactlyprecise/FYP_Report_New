@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -14,18 +14,24 @@ Belkin, Mikhail. 2018.
 \newblock \emph{arxiv:1801.03437}
   \urlprefix\url{http://arxiv.org/abs/1801.03437v2}.
 
+\bibitem[{Belkin et~al.(2019)Belkin, Hsu, Ma \& Mandal}]{Belkin_2019}
+Belkin, Mikhail, Daniel Hsu, Siyuan Ma \& Soumik Mandal. 2019.
+\newblock Reconciling modern machine-learning practice and the classical
+  bias{\textendash}variance trade-off.
+\newblock \emph{Proc Natl Acad Sci USA} 116(32). 15849--15854.
+\newblock \doi{10.1073/pnas.1903070116}.
+\newblock \urlprefix\url{https://doi.org/10.1073%2Fpnas.1903070116}.
+
 \bibitem[{Belkin et~al.(2018)Belkin, Ma \& Mandal}]{UnderstandKernel}
 Belkin, Mikhail, Siyuan Ma \& Soumik Mandal. 2018.
 \newblock To understand deep learning we need to understand kernel learning.
 \newblock \emph{arxiv:1802.01396}
   \urlprefix\url{http://arxiv.org/abs/1802.01396v3}.
 
-\bibitem[{{Department of English Language and
-  Literature}(2014)}]{ell-ht-format}
-{Department of English Language and Literature}. 2014.
-\newblock The honours thesis (english language).
-\newblock URL:
-  \url{http://www.fas.nus.edu.sg/ell/download/Undergraduate/Format_EL_AY2014-15.pdf}.
+\bibitem[{Canziani et~al.(2016)Canziani, Paszke \& Culurciello}]{Alfredo2016}
+Canziani, Alfredo, Adam Paszke \& Eugenio Culurciello. 2016.
+\newblock An analysis of deep neural network models for practical applications
+  .
 
 \bibitem[{K{\'{e}}gl et~al.(2001)K{\'{e}}gl, Linder \& Lugosi}]{LossFATBound}
 K{\'{e}}gl, Bal{\'{a}}zs, Tam{\'{a}}s Linder \& G{\'{a}}bor Lugosi. 2001.
@@ -34,6 +40,10 @@ K{\'{e}}gl, Bal{\'{a}}zs, Tam{\'{a}}s Linder \& G{\'{a}}bor Lugosi. 2001.
   Berlin Heidelberg.
 \newblock \doi{10.1007/3-540-44581-1_24}.
 \newblock \urlprefix\url{https://doi.org/10.1007%2F3-540-44581-1_24}.
+
+\bibitem[{Krizhevsky \& Hinton(2009)}]{krizhevsky2009learning}
+Krizhevsky, A \& G~Hinton. 2009.
+\newblock Learning multiple layers of features from tiny images .
 
 \bibitem[{Rahimi \& Recht(2008)}]{RFF_Rahimi}
 Rahimi, Ali \& Benjamin Recht. 2008.
@@ -50,6 +60,16 @@ Rudin, Walter. 1990.
 \newblock John Wiley {\&} Sons, Inc.
 \newblock \doi{10.1002/9781118165621}.
 \newblock \urlprefix\url{https://doi.org/10.1002%2F9781118165621}.
+
+\bibitem[{Russakovsky et~al.(2015)Russakovsky, Deng, Su, Krause, Satheesh, Ma,
+  Huang, Karpathy, Khosla, Bernstein, Berg \& Fei-Fei}]{Russakovsky_2015}
+Russakovsky, Olga, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean
+  Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein,
+  Alexander~C. Berg \& Li~Fei-Fei. 2015.
+\newblock {ImageNet} large scale visual recognition challenge.
+\newblock \emph{Int J Comput Vis} 115(3). 211--252.
+\newblock \doi{10.1007/s11263-015-0816-y}.
+\newblock \urlprefix\url{https://doi.org/10.1007%2Fs11263-015-0816-y}.
 
 \bibitem[{Schölkopf et~al.(2001)Schölkopf, Herbrich \&
   Smola}]{Representer_Theorem}
@@ -73,5 +93,11 @@ Wendland, Holger. 2004.
 \newblock Cambridge Monographs on APplied and Computational Mathematics.
   Cambridge University Press.
 \newblock \doi{10.1017/CBO9780511617539}.
+
+\bibitem[{Zhang et~al.(2016)Zhang, Bengio, Hardt, Recht \&
+  Vinyals}]{Zhang_Deep_Learning}
+Zhang, Chiyuan, Samy Bengio, Moritz Hardt, Benjamin Recht \& Oriol Vinyals.
+  2016.
+\newblock Understanding deep learning requires rethinking generalization .
 
 \end{thebibliography}

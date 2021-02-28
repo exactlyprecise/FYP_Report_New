@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.1.12)  28 FEB 2021 13:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.1.12)  28 FEB 2021 21:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1737,24 +1737,21 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 ] [7] [8
 
-] (./FYP.toc)
-Underfull \vbox (badness 1019) has occurred while \output is active []
-
- [9]
-[10]
-LaTeX Font Info:    Try loading font information for T3+lmr on input line 76.
-LaTeX Font Info:    No file T3lmr.fd. on input line 76.
+] (./FYP.toc
+[9]) [10] [1
 
 
-LaTeX Font Warning: Font shape `T3/lmr/m/n' undefined
-(Font)              using `T3/cmr/m/n' instead on input line 76.
+]
 
-[1
+LaTeX Warning: File `"Images/Classical_Descent.png' not found on input line 89.
 
 
-] [2
-
-] [3] [4
+<"Images/Classical_Descent.png, id=197, 864.22874pt x 595.22375pt>
+File: "Images/Classical_Descent.png Graphic file (type png)
+<use "Images/Classical_Descent.png>
+Package pdftex.def Info: "Images/Classical_Descent.png  used on input line 89.
+(pdftex.def)             Requested size: 276.60573pt x 190.50273pt.
+[2 <./Images/Classical_Descent.png>] [3] [4
 
 ] [5]
 \excnt=1
@@ -1778,32 +1775,38 @@ Underfull \vbox (badness 1062) has occurred while \output is active []
  [9]
 \excnt=1
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
+
+LaTeX Font Info:    Try loading font information for T3+lmr on input line 274.
+LaTeX Font Info:    No file T3lmr.fd. on input line 274.
+
+LaTeX Font Warning: Font shape `T3/lmr/m/n' undefined
+(Font)              using `T3/cmr/m/n' instead on input line 274.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 \excnt=1
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 251.
+LaTeX Warning: Command \; invalid in math mode on input line 274.
 
 
-Overfull \hbox (40.61555pt too wide) in paragraph at lines 252--255
+Overfull \hbox (40.61555pt too wide) in paragraph at lines 275--278
 \T1/lmr/m/n/10 (-20) Therefore, if we have $\OML/lmm/m/it/10 ^^M \OT1/lmr/m/n/1
 0 (-20) = 0$\T1/lmr/m/n/10 (-20) , since $\OML/lmm/m/it/10 f\OT1/lmr/m/n/10 (-2
 0) (\OML/lmm/m/it/10 x[]\OT1/lmr/m/n/10 (-20) )$ \T1/lmr/m/n/10 (-20) is un-af-
@@ -1821,267 +1824,264 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [10]
 [11] [12
 
+] [13] [14
+
 ]
 \excnt=1
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [13]
+ [15]
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-\excnt=1
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 319.
+LaTeX Warning: Command \; invalid in math mode on input line 345.
 
 \excnt=1
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 345.
+
 \excnt=1
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 364--367
+\excnt=1
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 390--393
 
  []
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 374.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 374.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 374.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 374.
-
-\excnt=1
-
-LaTeX Warning: Command \; invalid in math mode on input line 374.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 374.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 374.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 374.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 390.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 390.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 390.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 390.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 \excnt=1
 
-LaTeX Warning: Command \; invalid in math mode on input line 390.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 390.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 390.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 390.
-
-[15]
-\excnt=1
-\excnt=1
-
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 400.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
 \excnt=1
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 451.
+LaTeX Warning: Command \; invalid in math mode on input line 416.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [16]
 [17]
 \excnt=1
+\excnt=1
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 489.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 \excnt=1
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 489.
-
-\excnt=1
-\excnt=1
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-\excnt=1
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 518.
+LaTeX Warning: Command \; invalid in math mode on input line 477.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [18]
 [19]
+\excnt=1
 
-LaTeX Warning: Command \: invalid in math mode on input line 551.
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+\excnt=1
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 515.
+
+\excnt=1
+\excnt=1
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+\excnt=1
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+LaTeX Warning: Command \; invalid in math mode on input line 544.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20]
+[21]
+
+LaTeX Warning: Command \: invalid in math mode on input line 577.
 
 
 LaTeX Font Warning: Font shape `T3/lmr/m/it' undefined
-(Font)              using `T3/lmr/m/n' instead on input line 551.
+(Font)              using `T3/lmr/m/n' instead on input line 577.
 
 
-LaTeX Warning: Command \: invalid in math mode on input line 551.
+LaTeX Warning: Command \: invalid in math mode on input line 577.
 
 \excnt=1
-[20]
+[22]
 \excnt=1
-[21] [22
+[23] [24
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+lmr on input line 598.
+LaTeX Font Info:    Try loading font information for OMS+lmr on input line 624.
 
  (/usr/share/texmf/tex/latex/lm/omslmr.fd
 File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 598.
- [23]
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 624.
+ [25]
 
-LaTeX Warning: Command \; invalid in math mode on input line 625.
-
-
-LaTeX Warning: Command \; invalid in math mode on input line 625.
+LaTeX Warning: Command \; invalid in math mode on input line 651.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 625.
+LaTeX Warning: Command \; invalid in math mode on input line 651.
 
 
-LaTeX Warning: Command \; invalid in math mode on input line 625.
+LaTeX Warning: Command \; invalid in math mode on input line 651.
 
-[24]
+
+LaTeX Warning: Command \; invalid in math mode on input line 651.
+
+[26]
 Underfull \vbox (badness 1168) has occurred while \output is active []
 
- [25
+ [27
 
 ]
 \excnt=1
 \excnt=1
 
-Overfull \hbox (34.45128pt too wide) detected at line 675
+Overfull \hbox (34.45128pt too wide) detected at line 701
 []
  []
 
 \excnt=1
-
-Overfull \hbox (361.17122pt too wide) in alignment at lines 683--684
-[] []
- []
-
 \excnt=1
-[26]
-Overfull \hbox (32.26532pt too wide) detected at line 717
+[28]
+Overfull \hbox (32.26532pt too wide) detected at line 743
 \OMS/lmsy/m/n/10 k\OML/lmm/m/it/10 ^^L\OMS/lmsy/m/n/10 k \OT1/lmr/m/n/10 = \OML
 /lmm/m/it/10 ^^L[][] \OT1/lmr/m/n/10 = ([] \OML/lmm/m/it/10 []z[]\OT1/lmr/m/n/
 10 (\OML/lmm/m/it/10 x[]\OT1/lmr/m/n/10 ))([] [][](\OML/lmm/m/it/10 x[]\OT1/lmr
@@ -2091,12 +2091,12 @@ Y [] [] \OML/lmm/m/it/10 [][]k\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 x[]; x[]\OT1/l
 mr/m/n/10 ) = \OMS/lmsy/m/n/10 k\OML/lmm/m/it/10 f\OMS/lmsy/m/n/10 k
  []
 
-[27] [28
+[29] [30
 
-] [29] [30
+] [31] [32
 
 ]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 729.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 755.
 
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -2105,40 +2105,44 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [31] [32
+ [33] [34
 
 ]
-(./FYP.bbl) [33
+(./FYP.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-]
+ [35
+
+])
+[36]
 \tf@toc=\write7
 \openout7 = `FYP.toc'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 735.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 735.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 761.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 761.
  (./FYP.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 735.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 735.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 761.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 761.
 Package rerunfilecheck Info: File `FYP.out' has not changed.
-(rerunfilecheck)             Checksum: C0C30EEDFC234D406FD0A4CC8D61F515;1364.
+(rerunfilecheck)             Checksum: 6426376E76D789CA521BAF5CB8B8A40A;1537.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 735.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 761.
  ) 
 Here is how much of TeX's memory you used:
- 26475 strings out of 492982
- 445116 string characters out of 6134896
- 595848 words of memory out of 5000000
- 29307 multiletter control sequences out of 15000+600000
- 102888 words of font info for 133 fonts, out of 8000000 for 9000
+ 26527 strings out of 492982
+ 445980 string characters out of 6134896
+ 596572 words of memory out of 5000000
+ 29331 multiletter control sequences out of 15000+600000
+ 103146 words of font info for 140 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,22n,56p,513b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,22n,56p,611b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
-ips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share
-/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
--mathit.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texm
+ips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share
+/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
+-mathex.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texm
 f/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx
 i10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fo
 nts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi5.pf
@@ -2153,12 +2157,11 @@ s/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.pfb>
 /public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-symbols/msbm7.pfb></usr/share/texmf/fonts/type1/fkr/tipa/tipa10.pfb></usr/share
-/texmf/fonts/type1/fkr/tipa/tipa8.pfb>
-Output written on FYP.pdf (43 pages, 449288 bytes).
+symbols/msbm7.pfb>
+Output written on FYP.pdf (46 pages, 477647 bytes).
 PDF statistics:
- 578 PDF objects out of 1000 (max. 8388607)
- 500 compressed objects within 5 object streams
- 123 named destinations out of 1000 (max. 500000)
- 22725 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 614 PDF objects out of 1000 (max. 8388607)
+ 533 compressed objects within 6 object streams
+ 133 named destinations out of 1000 (max. 500000)
+ 22746 words of extra memory for PDF output out of 24883 (max. 10000000)
 
