@@ -17,12 +17,12 @@
 \contentsline {section}{\numberline {4.1}Notations}{15}{section.4.1}
 \contentsline {section}{\numberline {4.2}Interpolation Estimates}{15}{section.4.2}
 \contentsline {section}{\numberline {4.3}Approximation Theorem}{22}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Regularity of Functions}{23}{subsection.4.3.1}
-\contentsline {chapter}{\chapternumberline {5}Existing Bounds}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{25}{section.5.1}
-\contentsline {chapter}{\chapternumberline {6}Experiments}{27}{chapter.6}
-\contentsline {section}{\numberline {6.1}Random Fourier Features}{27}{section.6.1}
-\contentsline {chapter}{\chapternumberline {7}Other Notes}{31}{chapter.7}
-\contentsline {section}{\numberline {7.1}Weaknesses}{31}{section.7.1}
-\contentsline {appendix}{\chapternumberline {A}Your first appendix}{33}{appendix.A}
-\contentsline {chapter}{Bibliography}{35}{section*.5}
+\contentsline {subsection}{\numberline {4.3.1}Regularity of Functions}{24}{subsection.4.3.1}
+\contentsline {chapter}{\chapternumberline {5}Existing Bounds}{27}{chapter.5}
+\contentsline {section}{\numberline {5.1}Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{27}{section.5.1}
+\contentsline {chapter}{\chapternumberline {6}Experiments}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}Random Fourier Features}{29}{section.6.1}
+\contentsline {chapter}{\chapternumberline {7}Other Notes}{33}{chapter.7}
+\contentsline {section}{\numberline {7.1}Weaknesses}{33}{section.7.1}
+\contentsline {appendix}{\chapternumberline {A}Your first appendix}{35}{appendix.A}
+\contentsline {chapter}{Bibliography}{37}{section*.5}

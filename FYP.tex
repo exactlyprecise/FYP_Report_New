@@ -24,6 +24,8 @@
 \usepackage{expex} 
 \lingset{Everyex=\singlespace}
 
+\setlength\parindent{0pt}
+
 % Titling commands. 
 \title{Honours Thesis Template}
 \author{Ng Wei Le}
@@ -568,6 +570,47 @@ Theorem 11.22 in \cite{ScatteredDataApproximation}:
 	Following the steps of the previous theorem then gives us our result.
 \end{proof}
 \section{Approximation Theorem} \label{sec:AppThm}
+First, we need the result that: with $h_{X,\Omega}$ as the fill on the order of $O(n/\log n)^{-1/d}$ (using the theorem S1 in Belkin's paper).
+\begin{proof}
+	Whern $n$ is big enough, we (approximately) divide the cube $\Omega$ into $n$ smaller subcubes, where each subcube has $1/n$ the volume of $\Omega$ (Let the volume of $\Omega$ be 1 for simplicity).\\
+	Let $g_k$ be a vertice of one of the subcubes. Let $N$ be the number of vertices of the subcubes.
+	Let's say all $x_i$ are not within $r$ distance from a point $g$.\\ Then $\min_{1 \leq i \leq n} \norm{g - x_i} > r > 0 $ i.e. 
+	$x_i \notin B(g, r), 1\leq i\leq n$.
+	\begin{equation*}
+	\begin{split}
+		\PP(x_i \notin B(g, r), 1\leq i\leq n) &= \prod_{i=1}^{n} \PP(x_i \notin B(g, r)) \\
+		&= [\PP(x_i \notin B(g, r))]^n \\
+		&= [1 - \PP(x_i \in B(g, r))] \\
+		&= (1 - c_d r^d)^n \\
+		&\approx \exp(-c_d r^d n). 
+	\end{split}
+	\end{equation*}
+	Where $c_d$ is some constant. It arises due to ratio of volume of ball vs volume of where $x_i$ can be.
+	The distance from a point $x$ in the cube to some $x_i$ $\leq$ dist($x, g_k$) + dist($g_k, x_i$).\\
+	For $g_k$ being one of the vertices of the subcube $x$ resides in. For the subcube with length $a$ and dimension $d$ and volume $n^{-1}$, since 
+	\[ a_d = n^{-1} \implies a = n^{-1/d}. \]
+	So the end-to-end distance in the subcube is $a\sqrt{d} = n^{-1/d}\sqrt{d}$, which goes to 0 for big $n$, so dist($x, g_k$) will be small.\\
+	 The distance from a point $x$ in the cube to some $x_i$ $\approx$ dist($g_k, x_i$) for large $n$.
+	\begin{equation*}
+	\begin{split}
+		\PP(h_{X,\Omega} > r) &\approx \PP(\exists \text{ vertice } g_k | x_i \notin B(g_k, r), 1\leq i\leq n)\\
+		&= \PP(\bigcup_{k} \{ x_i \notin B(g_k, r), 1 \leq i \leq n\} ) \\
+		&\leq \sum_{k=1}^{N}\PP(x_i \notin B(g_k, r), 1 \leq i \leq n) \\
+		&= \sum_{k=1}^{N} \exp(-c_d r^d n)\\
+		&\leq 2^d n \exp(-c_d r^d n)\\
+		&= \exp(d\log 2+\log n - c_d r^d n )
+ 	\end{split}
+	\end{equation*}
+	$\PP(h_{X,\Omega} > r) \rightarrow 0$ when:
+	\begin{equation*}
+	\begin{split}
+		c_dr^dn &>> \log n\\
+		\implies ~~ r &>> (\frac{\log n}{n})^{1/d} c_d^{1/d}.
+	\end{split}
+	\end{equation*}
+	i.e. We have a low probability that $\PP(h_{X,\Omega} > r)$ if r grows with respect to $(\frac{n}{\log n})^{-1/d}$ (for large $n$).  
+\end{proof}
+
 
 The below theorem gives us some justification as to why the minimum norm interpolating function was chosen, though this only works under noiseless conditions:
 % Might need to rephrase this part to avoid plag
@@ -580,7 +623,7 @@ The below theorem gives us some justification as to why the minimum norm interpo
 	\end{equation*}
 \end{thm}
 
-With $h_{X,\Omega}$ as the fill on the order of $O(n/\log n)^{-1/d}$ (using the theorem S1 in Belkin's paper TODO).
+\begin{proof}
 We consider $f(x) := h(x) - h^*(x)$. Since $h$ is interpolating, we have $f(x_i) = 0$ for all $x_i$. The interpolant of $f$, $s_{f,X}$ will then be the zero function. Thus, we have:
 \begin{equation*}
 \begin{split}
@@ -589,6 +632,7 @@ We consider $f(x) := h(x) - h^*(x)$. Since $h$ is interpolating, we have $f(x_i)
 &\leq \exp(-c(n/\log n)^{1/d}) (\norm{h^*}_{\RKHSGauss} + \norm{h}_{\RKHSGauss})
 \end{split}
 \end{equation*}
+\end{proof}
 Another form we can have is using Proposition 14.1 in \cite{ScatteredDataApproximation}:
 \begin{prop}
 	Let $\Omega \subseteq \RR^d$ be bounded and measurable. Suppose $X = \{x_1, ... , x_N\} \subseteq \Omega$ is quasi-uniform with respect to  $c_{qu} > 0$. Then there exists constants $c_1, c_2 > 0$ depending only on space dimension $d$, on $\Omega$ and on $c_{qu}$ such that:
