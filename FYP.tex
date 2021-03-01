@@ -55,7 +55,7 @@ Special thanks to my research supervisor, Prof. Subhroshekhar Ghosh, for guiding
 \tableofcontents
 
 % Include the list of figures and list of tables only if you actually have figures and tables! (The * after each indicates that it should not be included in the table of contents.)
-%\listoffigures*
+\listoffigures*
 %\listoftables*
 
 % Next, we go into "main matter" mode.
@@ -79,7 +79,7 @@ Classically, there are reasons why one does not tend to choose a function $h_n$ 
 \section{Bias Variance Tradeoff}
 We define the generalization error (or sometimes known as the generalization gap) as difference between the empirical and expected classifier loss, i.e. $ \abs{ \EE_{x,y}[l(\hat{h_n}(x), y)] - L_{emp}(\hat{h_n}) } $. It would make sense to decrease this gap to as little as possible.\\
 Many classical bounds have this generalization gap is a form of:
-\begin{equation}
+\begin{equation} \label{eqn:Generalization_Gap}
 \EE_{x,y}[l(\hat{h_n}(x), y)] \leq L_{emp}(\hat{h_n}) + O(\sqrt{c/n})
 \end{equation}
 where $c$ is some  measure of the complexity of $\HH$, for example the fat-shattering dimension, VC-dimension, Rademacher complexity, etc. The general result being that, with a greater complexity of the function class $\HH$, the greater the upper bound of this generalization gap. However, if $\HH$ is not complex enough, we may not find any function $\hat{h_n} \in \HH$ that reduces the empirical risk sufficiently (underfitting). Hence, classical algorithms try to find a balance between over and underfitting, decreasing the expected loss by controlling $\HH$, either explicitly or implicitly.
@@ -88,7 +88,7 @@ For example, to change the complexity of $\HH$ explicitly, one might choose a si
 This classical curve from \cite{Belkin_2019} is shown in Figure \ref{fig:Classical_Descent}.
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{"Images/Classical_Descent.png}
+	\includegraphics[width=1.2\textwidth]{"Images/Classical_Descent.png}
 	\par
 	\caption{Curve showing how the training and test risk changes with respect to the capacity of $\HH$. The test risk results from bias-variance tradeoff, and the Capacity of $\HH$ is selected at the sweet spot.} \label{fig:Classical_Descent}
 \end{figure}
@@ -288,120 +288,296 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 \chapter{Overfitted and Interpolated Kernel Classifiers}
 We shall give experimental results performed in \cite{UnderstandKernel} that show the strong generalization performance also appears in kernel classifiers.
 	
-\chapter{Approximation and Estimation}
-	\section{Notations} \label{sec:Notations}
-	
-	Let $\pi_m(\RR^d)$ be a multivariate polynomial with $d$ variables and degree $\leq m$, i.e. 
-	\[ \pi_m(\RR^d) = \{ p(x) = \sum_{k \leq m} c_k x^k \} \] 	
-	\\
-	Let $C^k(X)$ be the set of functions on $X$ that are $k$ times continuously differentiable. \\
-	For a point $x \in \RR^d$, it has the components of its coordinates $\chi_1, .., \chi_d$, whereas we represent $n$ points in $\RR^d$ as $x_1, .., x_n$.\\
-	We denote $\NN_0$ as the set of non-negative integers.
-	We denote the multi-index vector with its components as $\alpha = (\alpha_1, ..., \alpha_d)^\Trans \in \NN_{0}^{d}$, and $|\alpha| := \norm{\alpha}_1$ For $X \subseteq \RR^d$, $f \in C^k(X)$, $|\alpha| \leq k$ and $x \in \RR^d$, we denote:
-	\[ D^\alpha f := \frac{\partial^{|\alpha|}}{\partial\chi_1^{\alpha_1} \cdot\cdot\cdot \partial\chi_d^{\alpha_d}} f \]
-	
-	\begin{defn}
-		Consider the set of points $X = {x_1, ..., x_n} \subseteq \RR$ and $\pi_m(\RR^d)$ with $n \geq \dim(\pi_m(\RR^d)$. $X$ is called $\pi_m(\RR^d)$-unisolvent if there is no polynomial in $\pi_m(\RR^d)$ (besides the zero polynomial) that is zero on all the points.
-	\end{defn}
 
+\chapter{Existing Bounds}
+\section{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers} \label{sec:BoundsKernel}
+Steps are: 
+\begin{itemize}
+	\item Find lower bound on function norm of t-overfitted classifiers in RKHS corresponding to Gaussian Kernels.
+	\item Show loss for available bounds for kernel methods based on function norm (can perhaps use this to explain approximation theorem as well?)
+\end{itemize}
+Interpolation: 0 regression error. Overfitting: 0 classification error. Interpolation implies overfitting.
+\begin{defn}
+	We say $h \in H$ t-overfits data, if it achieves zero classification loss (overfits) and $\forall_iy_ih(x_i) > t > 0$.
+\end{defn}
+The below shows a theorem on how the function norm changes with respect to t-overfitting.
+\begin{thm} \label{thm:normBound}
+	Let $(\xv_i ,y_i)$ be data sampled from $P$ on $\Omega \times \{-1, 1\}$ for $i = 1,..., n$. Assume that $y$ is not a deterministic function of $x$ on a subset of non-zero measure. Then, with high probability, any $h$ that t-overfits the data, satisfies
+	\[\norm{h}_H > Ae^{Bn^{1/d}}\]
+	for some constants $A, B > 0$ depending on $t$.
+\end{thm}
+
+We define the $\gamma$-shattering and fat-shattering dimension below:
+\begin{defn}
+	Let F be a set of functions mapping from a domain $X$ to $\RR$. Suppose $S = \{x_1, x_2, ..., x_m\} \subseteq X$.  Suppose also that $\gamma$ is a positive real number. Then $S$ is $\gamma$-shattered by F if there are real
+	numbers $r_1, r_2,..., r_m$, such that for each $b \in \{0, 1\}^m$ there is a function $f_b$ in $F$ with
+	\[
+	f_b(x_i) \geq r_i + \gamma \text{ if } b_i = 1 \text{, and } f_b(x_i) \leq r_i - \gamma \text{ if } b_i = 0 \text{, for } 1 \leq i \leq m.
+	\] We say $r = (r_1, r_2,..., r_m)$ witnesses the shattering.
+	Suppose that F is a set of functions from a domain $X$ to $\RR$ and that $\gamma > 0$. Then $F$ has $\gamma$-dimension $d$ if $d$ is the maximum	cardinality of a subset $S$ of $X$ that is $\gamma$-shattered by $F$. If no such maximum exists, we say that $F$ has infinite $\gamma$-dimension. The $\gamma$-dimension of $F$ is denoted $fat_F(\gamma)$. This defines a function $fat_F: \RR \rightarrow N \cup \{0,\infty\}$, which we call the fat-shattering dimension of $F$.
+\end{defn}
+\begin{proof}
+	Let $B_R = \{ f \in \mathcal{H}, \norm{f}_\mathcal{H} < R \}$ be a ball of radius $R$ in RKHS $\mathcal{H}$. Suppose the data is $\gamma$-overfitted, \cite{LossFATBound} gives us a high probability of a bound of
+	\[ L(f) < O(\frac{\text{ln}(n)^2}{\sqrt{n}}\sqrt{fat_{B_R}(\gamma/8)}) \] for $L(f)$ the expected classification error. Also, from \cite{ApproximationConcentration} we have \[fat_{B_R}(\gamma) < O((log(R/\gamma))^d)\].
+	We then have $B_R$ containing no function that $\gamma$ overfits the data unless
+	\[(log(R/\gamma))^d > O(n) \implies R > c_1 \text{ exp}(c_2(\frac{n}{\text{ln }n})^{1/d})\]
+	for some positive constants $c_1, c_2$.
+\end{proof}
+Classical bounds for kernel methods (\cite{UnderstandKernel} ) are in the form:
+\[ \lvert \frac{1}{n} \sum_{i}l(f(x_i),y_i) - L(f) \rvert \leq C \frac{\norm{f}^a_\mathcal{H}}{n^b}, \hspace{1em} C,a,b \geq 0 \]
+The right side on this will tend to infinity for bigger $\norm{f}_\mathcal{H}$, which is suggested by Theorem \ref{thm:normBound}.
+
+\chapter{Double Descent}
+
+\section{Double Descent Curve}
+As proposed in \cite{Belkin_2019}, a way to reconcile the classical Machine Learning curve with modern machine overparemeterization practice is the double descent curve. As seen in the figure \ref{fig:Double_Descent}, the first part of the curve, when the capacity of $\HH$ (which is a general term, and can mean things like the VC-Dimension. In this case, we take it to be the number of free parameters in the model) is smaller, it resembles the classical U-shaped curve. However, when the capacity of $\HH$ increases further, the test risk hits a maximum (typically at the point of interpolation), and further increase of capacity of $\HH$ decreases the test risk, sometimes to the point of the graph going below the minimum of the initial U-shaped curve itself. \\
+This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in section \ref{sec:RFF_Exp}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.2\textwidth]{"Images/Double_Descent.png}
+	\par
+	\caption{Curve showing the double descent proposition. When the capacity of $\HH$ is large enough the test risk may be lower than that at the local minimum.} \label{fig:Double_Descent}
+\end{figure}
+
+\pagebreak
+
+\section{Random Fourier Features} \label{sec:RFFs}
+For a feature map $\phi: \RR^d \rightarrow \RR^{d'}$ the kernel trick allows easy computation for positive definite kernel $k$ where $k(x,y) = \inner{\phi(x),\phi(y)}$. We want to find a randomized feature map $z: \RR^d \rightarrow \RR^{\bar{d}}$ such that 
+\begin{equation*}
+\begin{split}
+k(x,y) &= <\phi(x), \phi(y)> \\
+&\approx <z^{\Trans}(x), z(y)>.
+\end{split}
+\end{equation*}
+As suggested by \cite{RFF_Rahimi}, for a shift-invariant kernel $k$: $k(x, y) = k(x - y)$), we consider the mapping $z(x) = cos(w^{\Trans}x + b)$, where $w$ is drawn from the probability distribution $p$:
+\begin{equation}
+p(w) = \frac{1}{2\pi} \int k(h) ~ \text{exp}(-iw^{\Trans}h) ~ \text{d}h
+\label{eq:probFourier}
+\end{equation} 
+
+when we compute the Fourier transform of the kernel $k$, and $b$ is drawn from the uniform distribution on $[0, 2\pi]$.
+
+We know that the fourier transform of $k(\cdot)$ is a probability distribution from Bochner's theorem:
+\begin{thm} \label{thm:Bochner}
+	(Bochner \cite{Rudin_1990}).For a continuous kernel $k(x - y)$  it is a positive definite kernel if and only if $k(\cdot)$ is the fourier transform of a non-negative measure.
+\end{thm}
+
+We now have:
+\[ k(x - y) = \int_{\RR^d} p(w) \text{exp}(iw^{\Trans}(x - y)) ~ \text{d}w = \EE_w[e^{iw^{\Trans}x}(e^{iw^{\Trans}y})^*]. \]
+Therefore, we can use $e^{iw^{\Trans}x}(e^{iw^{\Trans}y})^*$ as an (unbiased) estimate of $k(x, y)$.
+Let $\phi_w(x) = e^{iw^{\Trans}x}$
+We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, as suggested by \cite{RFF_Rahimi}.
+\begin{prop}
+	For $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$, where $w$ is drawn from probability distribution $p$ in \eqref{eq:probFourier} and $b$ drawn from a uniform random variable on $[0, 2\pi]$.
+	\[E(z_w(x))z_w(y) = k(x,y)\]
+\end{prop}
+\begin{proof}
+	\begin{equation*}
+	\begin{split}
+	z_w(x) &= 2 ~ \frac{\sqrt{2}}{2}cos(w^{\Trans}x + b) \\
+	&= \frac{1}{\sqrt{2}}~(e^{i(w^{\Trans}x+b)} + e^{-i(w^{\Trans}x+b)}) \\
+	&= \frac{1}{\sqrt{2}}~(\phi_w(x)e^{ib} + \phi_w(x)^* e^{-ib})
+	\end{split}
+	\end{equation*}
+	Where $\phi_w(x) = e^{iw^{\Trans}x}$.
+	\begin{equation*}
+	\begin{split}
+	z_w(x)z_y(y) &= \frac{1}{2}[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b} \\
+	&~ + \phi_w(x)\phi_w(y)^* + \phi_w(x)^*\phi_w(y)] \\
+	\EE[z_w(x)z_y(y)] &= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}]\\
+	&~ + \frac{1}{2}\EE[\phi_w(x)\phi_w(y)^*] + \frac{1}{2}\EE[\phi_w(x)^*\phi_w(y)] \\ 
+	\end{split}
+	\end{equation*}
+	As mentioned earlier in Theorem \ref{thm:Bochner}, $\EE_w[\phi_w(x)\phi_w(y)^*] = k(x - y)$.
+	Also $\phi_w(x)\phi_w(y)^* = (\phi_w(x)^*\phi_w(y))^*$.
+	\begin{equation*}
+	\begin{split}
+	\EE[z_w(x)z_y(y)] &= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}]
+	+ \frac{1}{2}k(x-y) + \frac{1}{2}[k(x-y)]^* \\
+	&= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}] + k(x-y)
+	\end{split}
+	\end{equation*}
+	For real kernel , $k(x - y) = (k(x - y))^*$.
+	\begin{equation*}
+	\begin{split}
+	\EE_{w,b}[\phi_w(x)\phi_w(y)e^{i2b}] &= \frac{1}{2\pi}\int_{\RR^d}\int_{0}^{2\pi} p(w)\phi_w(x)\phi_w(y)e^{i2b} \text{d}b~\text{d}w \\
+	&= \frac{1}{2\pi}\int_{\RR^d} p(w)\phi_w(x)\phi_w(y) \int_{0}^{2\pi} e^{i2b} \text{d}b~\text{d}w \\
+	&= 0
+	\end{split}
+	\end{equation*}
+	Since $\int_{0}^{2\pi} e^{i2b} \text{d}b = 0$. Similarly, $	\EE_{w,b}[\phi_w(x)^*\phi_w(y)^*e^{-i2b}] = 0$.
+	\[ \therefore \EE[z_w(x)z_y(y)] = k(x - y). \]
 	
-	\section{Interpolation Estimates}
-	
-	Let $X = {x_1, ..., x_n} \subseteq \RR$  be a set of points that is $\PPP$ unisolvent. For $p_1, .., p_Q$ that form a basis of $\PPP$, let $P = (p_j(x_i)) \in \RR^{n\times Q}$. Let $\Phi$ be a positive definite kernel and $A = (\Phi(x_i, x_j)) \in \RR^{n\times n}$. We let $e^{(j)}$ represent the $j$th unit vector.
-	Consider the linear system:
-	\begin{equation} \label{eqn:InterpolateMat}
+\end{proof}
+The variance of the estimate is decreased by using $z$, a $D$ dimensional vector by concatenating $D$ of $z_w$ and normalizing by a constant $\sqrt{D}$. We let:
+\[z(x) = \sqrt{\frac{2}{D}} [cos(w_1^{\Trans}x + b_1) ... cos(w_D^{\Trans}x + b_D)] \]
+with randomly drawn $w_i$ and $b_i$ as described previously.
+
+\section{Experiment} \label{sec:RFF_Exp}
+\subsection{Function Class}
+Assume we have datapoints $\{(x_j, y_j)\}_{1 \leq j \leq n}$, where $x_j \in \RR^d$, $y_j \in \RR$.\\
+Let $\xi(x;w) := \exp(i w^\Trans x)$.
+Consider the class of functions, $\HH_N$ with $N$ number of complex free parameters. That consist of $h_N: \RR \rightarrow \CC$ where:
+\[ h_N(x) = \sum_{j=1}^{N} a_j \xi(x;w_j). \]
+Where $w_1,..., w_N \in \RR^d$ are sampled independently from the standard Gaussian distribution. With this, $\HH_N$ becomes a better approximation of the RKHS corresponding to the Gaussian RBF kernel when $N$ is huge. We denote the RKHS corresponding ot the Gaussian RBF kernel with $H_\infty$. As per standard machine learning procedure, we want to find $a_1, ..., a_N$ so that the function $h_N \in \HH_N$ is predicts $y$ given unseen $x$ well.
+\subsection{Algorithm}
+Choose $a = (a_1,..., a_N)$ only through minimization of the square loss, i.e.
+\[ \min_{a} \frac{1}{n} \sum_{k=1}^{n}(h_N(x_k) - y_k)^2. \]
+However, when the minimizer is not unique (which will be the case when $N > n$), choose $a$ such that it has the smallest L2-norm out of all the minimizers. We give some rationale as to choosing the smallest norm in the section \ref{sec:AppThm}.\\
+This choice of norm for $a$ is meant to be similar to the RKS norm $\norm{h}_{\HH_\infty}$. Below, we give a sketch as to the reason:
+
+	Let $f(x)$ be the minimum norm RKHS interpolant function for the datapoints. 
+	\begin{equation*}
+	\begin{split}
+	f(x) &= \sum_{i}\beta_ik(x_i, x)  \because(\text{Representer Theorem}) \\
+	&\approx \sum_{i}\beta_iz(x_i)^\text{T}z(x) \\
+	&= a^\text{T}z(x) = \hat{f}(x)
+	\end{split}
+	\end{equation*}
+	Where $a = \sum_{i}\beta_iz(x_i) $.
+	The norm of the function from the random fourier features approximation is:
+	\begin{equation*}
+	\begin{split}
+	\norm{a} &=   a^\text{T} a = 
+	(\sum_{i}\beta_i z^\text{T}(x_i)) (\sum_{i}\beta_i z(x_i)) \\
+	&= \sum_i \sum_j \beta_i \beta_j z^\text{T}(x_i)z(x_j)  \\
+	&\approx \sum_i \sum_j \beta \beta_j k(x_i, x_j) \\
+	&= \norm{f}_{\HH_\infty}
+	\end{split}
+	\end{equation*}
+
+\subsection{Results}
+This was tested on the MNIST dataset, with more information in the original paper.\\
+The initial part of the curve as $N < n$ follows a standard U-shaped descent curve, However, after the point of interpolation when there is 0 training risk (when $N = n$), the test loss decreases, even dipping below the previous local minimum as $N$ grows larger (around $N = 2n$). It keeps decreasing as $N$ increases further, moving towards the original kernel solution as seen in Figure \ref{fig:RFF_Exp}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1.3\textwidth]{"Images/RFF_Exp.png}
+	\par
+	\caption{Experimental Results: RFF function class on MNIST. $n=10^4$, test risk and coefficient norm is in logarithmic scale.} \label{fig:RFF_Exp}
+\end{figure}
+
+\section{Plausible Explanations}
+Why does the test risk decrease even when increasing $N$ after the point of interpolation?\\
+If we look at equation (\ref{eqn:Generalization_Gap}), it seems counter-intuitive to increase the complexity of the function class after the point of interpolation. Afterall the $L_{emp}$ remains at 0, while the complexity of $\HH$ increases, thus increasing the upper bound of the generalization gap. It seems that this upper bound is insufficient in explaining the decrease in test risk.\\
+An explanation given by the paper is that the capacity of the function class might not be a good inductive bias (or a good indicator for the inductive bias) for the problem. For example, if the inductive bias is a smooth function, or a smaller norm, or a larger margin (for classification), then by considering a class with a wider range of fucntions, the algorithm may find a function that is able to better fit that inductive bias.\\
+For example, in the case of the experiment presented, we are able to find $a$ with smaller L2-norm when we increase $N$, as was shown in the Figure \ref{fig:RFF_Exp}, which might explain the decrease of test risk.
+
+\chapter{Approximation and Estimation}
+\section{Notations} \label{sec:Notations}
+
+Let $\pi_m(\RR^d)$ be a multivariate polynomial with $d$ variables and degree $\leq m$, i.e. 
+\[ \pi_m(\RR^d) = \{ p(x) = \sum_{k \leq m} c_k x^k \} \] 	
+\\
+Let $C^k(X)$ be the set of functions on $X$ that are $k$ times continuously differentiable. \\
+For a point $x \in \RR^d$, it has the components of its coordinates $\chi_1, .., \chi_d$, whereas we represent $n$ points in $\RR^d$ as $x_1, .., x_n$.\\
+We denote $\NN_0$ as the set of non-negative integers.
+We denote the multi-index vector with its components as $\alpha = (\alpha_1, ..., \alpha_d)^\Trans \in \NN_{0}^{d}$, and $|\alpha| := \norm{\alpha}_1$ For $X \subseteq \RR^d$, $f \in C^k(X)$, $|\alpha| \leq k$ and $x \in \RR^d$, we denote:
+\[ D^\alpha f := \frac{\partial^{|\alpha|}}{\partial\chi_1^{\alpha_1} \cdot\cdot\cdot \partial\chi_d^{\alpha_d}} f \]
+
+\begin{defn}
+	Consider the set of points $X = {x_1, ..., x_n} \subseteq \RR$ and $\pi_m(\RR^d)$ with $n \geq \dim(\pi_m(\RR^d)$. $X$ is called $\pi_m(\RR^d)$-unisolvent if there is no polynomial in $\pi_m(\RR^d)$ (besides the zero polynomial) that is zero on all the points.
+\end{defn}
+
+
+\section{Interpolation Estimates}
+
+Let $X = {x_1, ..., x_n} \subseteq \RR$  be a set of points that is $\PPP$ unisolvent. For $p_1, .., p_Q$ that form a basis of $\PPP$, let $P = (p_j(x_i)) \in \RR^{n\times Q}$. Let $\Phi$ be a positive definite kernel and $A = (\Phi(x_i, x_j)) \in \RR^{n\times n}$. We let $e^{(j)}$ represent the $j$th unit vector.
+Consider the linear system:
+\begin{equation} \label{eqn:InterpolateMat}
+\begin{pmatrix}
+A & P \\
+P^\Trans & 0 \\
+\end{pmatrix}
+\begin{pmatrix}
+\alpha^{(j)} \\ \beta^{(j)}
+\end{pmatrix}
+=
+\begin{pmatrix}
+e^{(j)} \\ 0
+\end{pmatrix}.
+\end{equation}
+This linear system is uniquely solvable for $j \in \{1, 2, .., n\}$.
+
+\begin{proof}
+	For $\begin{pmatrix}
+	\alpha \\ \beta
+	\end{pmatrix}$ that lies in the null space of the matrix
+	$\begin{pmatrix}
+	A & P \\
+	P^\Trans & 0 \\
+	\end{pmatrix}$, we have the 2 equations:
+	\begin{equation*}
+	\begin{split}
+	A \alpha + P \beta &= 0,\\
+	P^\Trans \alpha = 0. \\
+	\end{split}
+	\end{equation*}
+	From the first equation, multiplying both sides by $\alpha^\Trans$, we get:
+	\begin{equation*}
+	\begin{split}
+	\alpha^{\Trans} A \alpha + \alpha^{\Trans} P \beta &= 0\\
+	\implies \alpha^{\Trans} A \alpha + (P^\Trans \alpha)^\Trans \beta &= 0\\
+	\implies \alpha^{\Trans} A \alpha &= 0\\
+	\end{split}
+	\end{equation*}
+	Since we know $\Phi$ is a positive definite kernel, then $\alpha = 0$, so we know $P \beta = 0$. Since $X$ is $\PPP$-unisolvent, so $\beta = 0$. Hence, the linear system (\ref{eqn:InterpolateMat}) is uniquely solvable.
+\end{proof}
+Let $u_j^*, V_X$ be defined such that:
+\begin{equation}
+\begin{split}
+u_j^* &:= \sum_{i=1}^{n} \alpha_i^{(j)} \Phi(\cdot, x_i) + \sum_{k=1}^{Q} \beta_k^{j} p_k \label{eq:ustar}\\
+V_X &:= \{ \sum_{i=1}^{n} \alpha_i \Phi(\cdot, x_i) ~ : \sum_{i=1}^{n} \alpha_i p(x_i) = 0, p \in \PPP  \} + \PPP.
+\end{split}
+\end{equation}
+So we have $u_j^* \in V_X$ and \[ u_i^*(x_j) =  \begin{cases} 
+1 & i=j \\
+0 & i \neq j.\\
+\end{cases}
+\]
+
+Also, for all $f \in V_X$, we have 
+\begin{equation} \label{eqn:finVx}
+f = \sum_{i=1}^{n} u_i^* f(x_i).
+\end{equation}
+For our next theorem, we further define:
+\begin{equation}
+\begin{split}
+R(\cdot) &:= (\Phi(\cdot, x_1),..., \Phi(\cdot, x_n))^\Trans \in \RR^n\\
+S(\cdot) &:= (p_1(\cdot),..., p_Q(\cdot))^{\Trans} \in \RR^Q \\
+\end{split}
+\end{equation}
+\begin{thm}
+	For $\Phi$ a positive definite kernel on $\Omega \subseteq \RR^d$ and points $X = \{ x_1,..., x_n \} \subseteq \Omega$ is $\PPP$-unisolvent. There exists functions $v_i^*(\cdot)$ for $i = \{ 1, 2, .., Q \} $ such that for $u^*(x) = (u^*_1(x), ..., u^*_n(x)$ where $u^*_i$ is defined in (\ref{eq:ustar}). we have:
+	\begin{equation} \label{eqn:vstar}
 	\begin{pmatrix}
 	A & P \\
 	P^\Trans & 0 \\
 	\end{pmatrix}
 	\begin{pmatrix}
-	\alpha^{(j)} \\ \beta^{(j)}
+	u^*(x)\\ v^*(x)
 	\end{pmatrix}
 	=
 	\begin{pmatrix}
-	e^{(j)} \\ 0
-	\end{pmatrix}.
+	R(x)\\ S(x)
+	\end{pmatrix}
 	\end{equation}
-	This linear system is uniquely solvable for $j \in \{1, 2, .., n\}$.
-	
-	\begin{proof}
-		For $\begin{pmatrix}
-		\alpha \\ \beta
-		\end{pmatrix}$ that lies in the null space of the matrix
-		$\begin{pmatrix}
-		A & P \\
-		P^\Trans & 0 \\
-		\end{pmatrix}$, we have the 2 equations:
-		\begin{equation*}
-		\begin{split}
-		A \alpha + P \beta &= 0,\\
-		P^\Trans \alpha = 0. \\
-		\end{split}
-		\end{equation*}
-		From the first equation, multiplying both sides by $\alpha^\Trans$, we get:
-		\begin{equation*}
-		\begin{split}
-		\alpha^{\Trans} A \alpha + \alpha^{\Trans} P \beta &= 0\\
-		\implies \alpha^{\Trans} A \alpha + (P^\Trans \alpha)^\Trans \beta &= 0\\
-		\implies \alpha^{\Trans} A \alpha &= 0\\
-		\end{split}
-		\end{equation*}
-		Since we know $\Phi$ is a positive definite kernel, then $\alpha = 0$, so we know $P \beta = 0$. Since $X$ is $\PPP$-unisolvent, so $\beta = 0$. Hence, the linear system (\ref{eqn:InterpolateMat}) is uniquely solvable.
-	\end{proof}
-	Let $u_j^*, V_X$ be defined such that:
-	\begin{equation}
+\end{thm}
+\begin{proof}
+	One of the things to be proven is that $P^\Trans u^*(x) = S(x)$. Since $\PPP \subseteq V_X$, then $(p_1,..., p_Q) \in V_X$, so by (\ref{eqn:finVx}), we have: $p_i(x) = \sum p_i(x_j)u_i^*(x)$, showing $P^\Trans u^*(x) = S(x)$.\\
+	Next, we need to show that there exists $v*$ such that $Au^*(x) + Pv^*(x) = R(x)$, so we need to show $Au^*(x) - R(x) \in P(\RR^Q)$.\\
+	$(P(\RR^Q))^\perp$ is the null space of its transpose. Consider $\omega \in \text{null}(P^\Trans) \subseteq \RR^n$, so we need to show that $\omega^\Trans (Au^*(x) - R(x)) = 0$, i.e. $\omega^\Trans Au^*(x) = \omega^\Trans R(x)$.\\
+	\begin{equation*}
 	\begin{split}
-	u_j^* &:= \sum_{i=1}^{n} \alpha_i^{(j)} \Phi(\cdot, x_i) + \sum_{k=1}^{Q} \beta_k^{j} p_k \label{eq:ustar}\\
-	V_X &:= \{ \sum_{i=1}^{n} \alpha_i \Phi(\cdot, x_i) ~ : \sum_{i=1}^{n} \alpha_i p(x_i) = 0, p \in \PPP  \} + \PPP.
+	P^\Trans \omega &= 0\\
+	\implies \omega^\Trans R(x) &\in V_X\\
+	\omega^\Trans R(\cdot) &= \sum_{i=1}^{n}u_i(\cdot)\omega^\Trans R(x_i) ~~(\because (\ref{eqn:finVx}))\\
+	&= \sum_{i=1}^{n} \sum_{j=1}^{n} u_i^*(\cdot) \omega_j \Phi(x_i, x_j) \\
+	&= \gamma^\Trans A u^*(\cdot).\\
 	\end{split}
-	\end{equation}
-	So we have $u_j^* \in V_X$ and \[ u_i^*(x_j) =  \begin{cases} 
-	1 & i=j \\
-	0 & i \neq j.\\
-	\end{cases}
-	\]
-	
-	Also, for all $f \in V_X$, we have 
-	\begin{equation} \label{eqn:finVx}
-	f = \sum_{i=1}^{n} u_i^* f(x_i).
-	\end{equation}
-	For our next theorem, we further define:
-	\begin{equation}
-	\begin{split}
-	R(\cdot) &:= (\Phi(\cdot, x_1),..., \Phi(\cdot, x_n))^\Trans \in \RR^n\\
-	S(\cdot) &:= (p_1(\cdot),..., p_Q(\cdot))^{\Trans} \in \RR^Q \\
-	\end{split}
-	\end{equation}
-	\begin{thm}
-		For $\Phi$ a positive definite kernel on $\Omega \subseteq \RR^d$ and points $X = \{ x_1,..., x_n \} \subseteq \Omega$ is $\PPP$-unisolvent. There exists functions $v_i^*(\cdot)$ for $i = \{ 1, 2, .., Q \} $ such that for $u^*(x) = (u^*_1(x), ..., u^*_n(x)$ where $u^*_i$ is defined in (\ref{eq:ustar}). we have:
-		\begin{equation} \label{eqn:vstar}
-		\begin{pmatrix}
-		A & P \\
-		P^\Trans & 0 \\
-		\end{pmatrix}
-		\begin{pmatrix}
-		u^*(x)\\ v^*(x)
-		\end{pmatrix}
-		=
-		\begin{pmatrix}
-		R(x)\\ S(x)
-		\end{pmatrix}
-		\end{equation}
-	\end{thm}
-	\begin{proof}
-		One of the things to be proven is that $P^\Trans u^*(x) = S(x)$. Since $\PPP \subseteq V_X$, then $(p_1,..., p_Q) \in V_X$, so by (\ref{eqn:finVx}), we have: $p_i(x) = \sum p_i(x_j)u_i^*(x)$, showing $P^\Trans u^*(x) = S(x)$.\\
-		Next, we need to show that there exists $v*$ such that $Au^*(x) + Pv^*(x) = R(x)$, so we need to show $Au^*(x) - R(x) \in P(\RR^Q)$.\\
-		$(P(\RR^Q))^\perp$ is the null space of its transpose. Consider $\omega \in \text{null}(P^\Trans) \subseteq \RR^n$, so we need to show that $\omega^\Trans (Au^*(x) - R(x)) = 0$, i.e. $\omega^\Trans Au^*(x) = \omega^\Trans R(x)$.\\
-		\begin{equation*}
-		\begin{split}
-		P^\Trans \omega &= 0\\
-		\implies \omega^\Trans R(x) &\in V_X\\
-		\omega^\Trans R(\cdot) &= \sum_{i=1}^{n}u_i(\cdot)\omega^\Trans R(x_i) ~~(\because (\ref{eqn:finVx}))\\
-		&= \sum_{i=1}^{n} \sum_{j=1}^{n} u_i^*(\cdot) \omega_j \Phi(x_i, x_j) \\
-		&= \gamma^\Trans A u^*(\cdot).\\
-		\end{split}
-		\end{equation*}
-	\end{proof}
+	\end{equation*}
+\end{proof}
 
 \begin{lem}
 	$v^*$ has the property where, for $v_i$ with $1 \leq i \leq Q$, we have: $v_i(x_j) = 0$ for $1 \leq j \leq n$.
@@ -570,46 +746,47 @@ Theorem 11.22 in \cite{ScatteredDataApproximation}:
 	Following the steps of the previous theorem then gives us our result.
 \end{proof}
 \section{Approximation Theorem} \label{sec:AppThm}
-First, we need the result that: with $h_{X,\Omega}$ as the fill on the order of $O(n/\log n)^{-1/d}$ (using the theorem S1 in Belkin's paper).
-\begin{proof}
-	Whern $n$ is big enough, we (approximately) divide the cube $\Omega$ into $n$ smaller subcubes, where each subcube has $1/n$ the volume of $\Omega$ (Let the volume of $\Omega$ be 1 for simplicity).\\
-	Let $g_k$ be a vertice of one of the subcubes. Let $N$ be the number of vertices of the subcubes.
-	Let's say all $x_i$ are not within $r$ distance from a point $g$.\\ Then $\min_{1 \leq i \leq n} \norm{g - x_i} > r > 0 $ i.e. 
-	$x_i \notin B(g, r), 1\leq i\leq n$.
-	\begin{equation*}
-	\begin{split}
-		\PP(x_i \notin B(g, r), 1\leq i\leq n) &= \prod_{i=1}^{n} \PP(x_i \notin B(g, r)) \\
-		&= [\PP(x_i \notin B(g, r))]^n \\
-		&= [1 - \PP(x_i \in B(g, r))] \\
-		&= (1 - c_d r^d)^n \\
-		&\approx \exp(-c_d r^d n). 
-	\end{split}
-	\end{equation*}
-	Where $c_d$ is some constant. It arises due to ratio of volume of ball vs volume of where $x_i$ can be.
-	The distance from a point $x$ in the cube to some $x_i$ $\leq$ dist($x, g_k$) + dist($g_k, x_i$).\\
-	For $g_k$ being one of the vertices of the subcube $x$ resides in. For the subcube with length $a$ and dimension $d$ and volume $n^{-1}$, since 
-	\[ a_d = n^{-1} \implies a = n^{-1/d}. \]
-	So the end-to-end distance in the subcube is $a\sqrt{d} = n^{-1/d}\sqrt{d}$, which goes to 0 for big $n$, so dist($x, g_k$) will be small.\\
-	 The distance from a point $x$ in the cube to some $x_i$ $\approx$ dist($g_k, x_i$) for large $n$.
-	\begin{equation*}
-	\begin{split}
-		\PP(h_{X,\Omega} > r) &\approx \PP(\exists \text{ vertice } g_k | x_i \notin B(g_k, r), 1\leq i\leq n)\\
-		&= \PP(\bigcup_{k} \{ x_i \notin B(g_k, r), 1 \leq i \leq n\} ) \\
-		&\leq \sum_{k=1}^{N}\PP(x_i \notin B(g_k, r), 1 \leq i \leq n) \\
-		&= \sum_{k=1}^{N} \exp(-c_d r^d n)\\
-		&\leq 2^d n \exp(-c_d r^d n)\\
-		&= \exp(d\log 2+\log n - c_d r^d n )
- 	\end{split}
-	\end{equation*}
-	$\PP(h_{X,\Omega} > r) \rightarrow 0$ when:
-	\begin{equation*}
-	\begin{split}
-		c_dr^dn &>> \log n\\
-		\implies ~~ r &>> (\frac{\log n}{n})^{1/d} c_d^{1/d}.
-	\end{split}
-	\end{equation*}
-	i.e. We have a low probability that $\PP(h_{X,\Omega} > r)$ if r grows with respect to $(\frac{n}{\log n})^{-1/d}$ (for large $n$).  
-\end{proof}
+\subsection{Fill Distance of points in a Cube}
+First, we need the result that: with $h_{X,\Omega}$ as the fill on the order of $O(n/\log n)^{-1/d}$ (using the theorem S1 in Belkin's paper). We give a proof sketch for this:
+
+Whern $n$ is big enough, we (approximately) divide the cube $\Omega$ into $n$ smaller subcubes, where each subcube has $1/n$ the volume of $\Omega$ (Let the volume of $\Omega$ be 1 for simplicity).\\
+Let $g_k$ be a vertice of one of the subcubes. Let $N$ be the number of vertices of the subcubes.
+Let's say all $x_i$ are not within $r$ distance from a point $g$.\\ Then $\min_{1 \leq i \leq n} \norm{g - x_i} > r > 0 $ i.e. 
+$x_i \notin B(g, r), 1\leq i\leq n$.
+\begin{equation*}
+\begin{split}
+\PP(x_i \notin B(g, r), 1\leq i\leq n) &= \prod_{i=1}^{n} \PP(x_i \notin B(g, r)) \\
+&= [\PP(x_i \notin B(g, r))]^n \\
+&= [1 - \PP(x_i \in B(g, r))] \\
+&= (1 - c_d r^d)^n \\
+&\approx \exp(-c_d r^d n). 
+\end{split}
+\end{equation*}
+Where $c_d$ is some constant. It arises due to ratio of volume of ball vs volume of where $x_i$ can be.
+The distance from a point $x$ in the cube to some $x_i$ $\leq$ dist($x, g_k$) + dist($g_k, x_i$).\\
+For $g_k$ being one of the vertices of the subcube $x$ resides in. For the subcube with length $a$ and dimension $d$ and volume $n^{-1}$, since 
+\[ a_d = n^{-1} \implies a = n^{-1/d}. \]
+So the end-to-end distance in the subcube is $a\sqrt{d} = n^{-1/d}\sqrt{d}$, which goes to 0 for big $n$, so dist($x, g_k$) will be small.\\
+The distance from a point $x$ in the cube to some $x_i$ $\approx$ dist($g_k, x_i$) for large $n$.
+\begin{equation*}
+\begin{split}
+\PP(h_{X,\Omega} > r) &\approx \PP(\exists \text{ vertice } g_k | x_i \notin B(g_k, r), 1\leq i\leq n)\\
+&= \PP(\bigcup_{k} \{ x_i \notin B(g_k, r), 1 \leq i \leq n\} ) \\
+&\leq \sum_{k=1}^{N}\PP(x_i \notin B(g_k, r), 1 \leq i \leq n) \\
+&= \sum_{k=1}^{N} \exp(-c_d r^d n)\\
+&\leq 2^d n \exp(-c_d r^d n)\\
+&= \exp(d\log 2+\log n - c_d r^d n )
+\end{split}
+\end{equation*}
+$\PP(h_{X,\Omega} > r) \rightarrow 0$ when:
+\begin{equation*}
+\begin{split}
+c_dr^dn &>> \log n\\
+\implies ~~ r &>> (\frac{\log n}{n})^{1/d} c_d^{1/d}.
+\end{split}
+\end{equation*}
+i.e. We have a low probability that $\PP(h_{X,\Omega} > r)$ if r grows with respect to $(\frac{n}{\log n})^{-1/d}$ (for large $n$).  
+
 
 
 The below theorem gives us some justification as to why the minimum norm interpolating function was chosen, though this only works under noiseless conditions:
@@ -624,14 +801,14 @@ The below theorem gives us some justification as to why the minimum norm interpo
 \end{thm}
 
 \begin{proof}
-We consider $f(x) := h(x) - h^*(x)$. Since $h$ is interpolating, we have $f(x_i) = 0$ for all $x_i$. The interpolant of $f$, $s_{f,X}$ will then be the zero function. Thus, we have:
-\begin{equation*}
-\begin{split}
-\norm{f}_{L_\infty(\Omega)} &= \sup_{x \in \Omega} \vert h(x) - h^*(x)\vert \\
-&< \exp(-c(n/\log n)^{1/d})\norm{f}_{\RKHSGauss} \\
-&\leq \exp(-c(n/\log n)^{1/d}) (\norm{h^*}_{\RKHSGauss} + \norm{h}_{\RKHSGauss})
-\end{split}
-\end{equation*}
+	We consider $f(x) := h(x) - h^*(x)$. Since $h$ is interpolating, we have $f(x_i) = 0$ for all $x_i$. The interpolant of $f$, $s_{f,X}$ will then be the zero function. Thus, we have:
+	\begin{equation*}
+	\begin{split}
+	\norm{f}_{L_\infty(\Omega)} &= \sup_{x \in \Omega} \vert h(x) - h^*(x)\vert \\
+	&< \exp(-c(n/\log n)^{1/d})\norm{f}_{\RKHSGauss} \\
+	&\leq \exp(-c(n/\log n)^{1/d}) (\norm{h^*}_{\RKHSGauss} + \norm{h}_{\RKHSGauss})
+	\end{split}
+	\end{equation*}
 \end{proof}
 Another form we can have is using Proposition 14.1 in \cite{ScatteredDataApproximation}:
 \begin{prop}
@@ -661,132 +838,6 @@ where $d(x, x')$ is the pseudometric defined by:
 \[ d^2(x, x') = k(x, x) - 2k(x, x') + k(x', x'). \]
 Intuitively, we can see the "speed" of which the function can change is bounded by the norm of the function in the RKHS space.
 
-\chapter{Existing Bounds}
-\section{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers} \label{sec:BoundsKernel}
-Steps are: 
-\begin{itemize}
-	\item Find lower bound on function norm of t-overfitted classifiers in RKHS corresponding to Gaussian Kernels.
-	\item Show loss for available bounds for kernel methods based on function norm (can perhaps use this to explain approximation theorem as well?)
-\end{itemize}
-Interpolation: 0 regression error. Overfitting: 0 classification error. Interpolation implies overfitting.
-\begin{defn}
-	We say $h \in H$ t-overfits data, if it achieves zero classification loss (overfits) and $\forall_iy_ih(x_i) > t > 0$.
-\end{defn}
-The below shows a theorem on how the function norm changes with respect to t-overfitting.
-\begin{thm} \label{thm:normBound}
-	Let $(\xv_i ,y_i)$ be data sampled from $P$ on $\Omega \times \{-1, 1\}$ for $i = 1,..., n$. Assume that $y$ is not a deterministic function of $x$ on a subset of non-zero measure. Then, with high probability, any $h$ that t-overfits the data, satisfies
-	\[\norm{h}_H > Ae^{Bn^{1/d}}\]
-	for some constants $A, B > 0$ depending on $t$.
-\end{thm}
-
-We define the $\gamma$-shattering and fat-shattering dimension below:
-\begin{defn}
-	Let F be a set of functions mapping from a domain $X$ to $\RR$. Suppose $S = \{x_1, x_2, ..., x_m\} \subseteq X$.  Suppose also that $\gamma$ is a positive real number. Then $S$ is $\gamma$-shattered by F if there are real
-	numbers $r_1, r_2,..., r_m$, such that for each $b \in \{0, 1\}^m$ there is a function $f_b$ in $F$ with
-	\[
-	f_b(x_i) \geq r_i + \gamma \text{ if } b_i = 1 \text{, and } f_b(x_i) \leq r_i - \gamma \text{ if } b_i = 0 \text{, for } 1 \leq i \leq m.
-	\] We say $r = (r_1, r_2,..., r_m)$ witnesses the shattering.
-	Suppose that F is a set of functions from a domain $X$ to $\RR$ and that $\gamma > 0$. Then $F$ has $\gamma$-dimension $d$ if $d$ is the maximum	cardinality of a subset $S$ of $X$ that is $\gamma$-shattered by $F$. If no such maximum exists, we say that $F$ has infinite $\gamma$-dimension. The $\gamma$-dimension of $F$ is denoted $fat_F(\gamma)$. This defines a function $fat_F: \RR \rightarrow N \cup \{0,\infty\}$, which we call the fat-shattering dimension of $F$.
-\end{defn}
-\begin{proof}
-	Let $B_R = \{ f \in \mathcal{H}, \norm{f}_\mathcal{H} < R \}$ be a ball of radius $R$ in RKHS $\mathcal{H}$. Suppose the data is $\gamma$-overfitted, \cite{LossFATBound} gives us a high probability of a bound of
-	\[ L(f) < O(\frac{\text{ln}(n)^2}{\sqrt{n}}\sqrt{fat_{B_R}(\gamma/8)}) \] for $L(f)$ the expected classification error. Also, from \cite{ApproximationConcentration} we have \[fat_{B_R}(\gamma) < O((log(R/\gamma))^d)\].
-	We then have $B_R$ containing no function that $\gamma$ overfits the data unless
-	\[(log(R/\gamma))^d > O(n) \implies R > c_1 \text{ exp}(c_2(\frac{n}{\text{ln }n})^{1/d})\]
-	for some positive constants $c_1, c_2$.
-\end{proof}
-Classical bounds for kernel methods (\cite{UnderstandKernel} ) are in the form:
-\[ \lvert \frac{1}{n} \sum_{i}l(f(x_i),y_i) - L(f) \rvert \leq C \frac{\norm{f}^a_\mathcal{H}}{n^b}, \hspace{1em} C,a,b \geq 0 \]
-The right side on this will tend to infinity for bigger $\norm{f}_\mathcal{H}$, which is suggested by Theorem \ref{thm:normBound}.
-
-\chapter{Experiments}
-
-\section{Random Fourier Features} \label{sec:RFFs}
-For a feature map $\phi: \RR^d \rightarrow \RR^{d'}$ the kernel trick allows easy computation for positive definite kernel $k$ where $k(x,y) = <\phi(x), \phi(y)>$. We want to find a randomized feature map $z: \RR^d \rightarrow \RR^{\bar{d}}$ such that 
-\[ k(x,y) = <\phi(x), \phi(y)> \approx <z^{\Trans}(x), z(y)> \].
-As suggested by \cite{RFF_Rahimi}, for a shift-invariant kernel $k$: $k(x, y) = k(x - y)$), we consider the mapping $z(x) = cos(w^{\Trans}x + b)$, where $w$ is drawn from the probability distribution $p$:
-\begin{equation}
-p(w) = \frac{1}{2\pi} \int k(h) ~ \text{exp}(-iw^{\Trans}h) ~ \text{d}h
-\label{eq:probFourier}
-\end{equation} 
-
-when we compute the Fourier transform of the kernel $k$, and $b$ is drawn from the uniform distribution on $[0, 2\pi]$.
-
-We know that the fourier transform of $k(\cdot)$ is a probability distribution from Bochner's theorem:
-\begin{thm} \label{thm:Bochner}
-	(Bochner \cite{Rudin_1990}).For a continuous kernel $k(x - y)$  it is a positive definite kernel if and only if $k(\cdot)$ is the fourier transform of a non-negative measure.
-\end{thm}
-
-We now have:
-\[ k(x - y) = \int_{\RR^d} p(w) \text{exp}(iw^{\Trans}(x - y)) ~ \text{d}w = \EE_w[e^{iw^{\Trans}x}(e^{iw^{\Trans}y})^*] \].
-Therefore, we can use $e^{iw^{\Trans}x}(e^{iw^{\Trans}y})^*$ as an estimate (unbiased) of $k(x, y)$.
-Let $\phi_w(x) = e^{iw^{\Trans}x}$
-We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, as suggested by \cite{RFF_Rahimi}.
-\begin{prop}
-	For $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$, where $w$ is drawn from probability distribution $p$ in \eqref{eq:probFourier} and $b$ drawn from a uniform random variable on $[0, 2\pi]$.
-	\[E(z_w(x))z_w(y) = k(x,y)\]
-\end{prop}
-\begin{proof}
-	\begin{equation*}
-	\begin{split}
-	z_w(x) &= 2 ~ \frac{\sqrt{2}}{2}cos(w^{\Trans}x + b) \\
-	&= \frac{1}{\sqrt{2}}~(e^{i(w^{\Trans}x+b)} + e^{-i(w^{\Trans}x+b)}) \\
-	&= \frac{1}{\sqrt{2}}~(\phi_w(x)e^{ib} + \phi_w(x)^* e^{-ib})
-	\end{split}
-	\end{equation*}
-	Where $\phi_w(x) = e^{iw^{\Trans}x}$.
-	\begin{equation*}
-	\begin{split}
-	z_w(x)z_y(y) &= \frac{1}{2}[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}
-	+ \phi_w(x)\phi_w(y)^* + \phi_w(x)^*\phi_w(y)] \\
-	\EE[z_w(x)z_y(y)] &= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}]
-	+ \frac{1}{2}\EE[\phi_w(x)\phi_w(y)^*] + \frac{1}{2}\EE[\phi_w(x)^*\phi_w(y)] \\ 
-	\end{split}
-	\end{equation*}
-	As mentioned earlier in Theorem \ref{thm:Bochner}, $\EE_w[\phi_w(x)\phi_w(y)^*] = k(x - y)$.
-	Also $\phi_w(x)\phi_w(y)^* = (\phi_w(x)^*\phi_w(y))^*$.
-	\begin{equation*}
-	\begin{split}
-	\EE[z_w(x)z_y(y)] &= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}]
-	+ \frac{1}{2}k(x-y) + \frac{1}{2}[k(x-y)]^* \\
-	&= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}] + k(x-y)
-	\end{split}
-	\end{equation*}
-	For real kernel , $k(x - y) = (k(x - y))^*$.
-	\begin{equation*}
-	\begin{split}
-	\EE_{w,b}[\phi_w(x)\phi_w(y)e^{i2b}] &= \frac{1}{2\pi}\int_{\RR^d}\int_{0}^{2\pi} p(w)\phi_w(x)\phi_w(y)e^{i2b} \text{d}b~\text{d}w \\
-	&= \frac{1}{2\pi}\int_{\RR^d} p(w)\phi_w(x)\phi_w(y) \int_{0}^{2\pi} e^{i2b} \text{d}b~\text{d}w \\
-	&= 0
-	\end{split}
-	\end{equation*}
-	Since $\int_{0}^{2\pi} e^{i2b} \text{d}b = 0$. Similarly, $	\EE_{w,b}[\phi_w(x)^*\phi_w(y)^*e^{-i2b}] = 0$.
-	\[ \therefore \EE[z_w(x)z_y(y)] = k(x - y). \]
-	
-\end{proof}
-As suggested by \cite{RFF_Rahimi}, the variance of the estimate is decreased by using $z$, a $D$ dimensional vector by concatenating $D$ of $z_w$ and normalizing by a constant $\sqrt{D}$. We let:
-\[z(x) = \sqrt{\frac{2}{D}} [cos(w_1^{\Trans}x + b_1) ... cos(w_D^{\Trans}x + b_D)] \]
-with randomly drawn $w_i$ and $b_i$ as described previously.
-
-
-\begin{thm} \label{thm:RFFnorm}
-	For $N$ the number of random features, and $x_1, x_2, ..., x_n$ the data points, when $N > n$ and as $N$ increases, the norm of the minimizer tends to  the norm of the minimum norm RKHS interpolant.
-\end{thm}
-\begin{proof}
-	Let $f(x)$ be the minimum norm RKHS interpolant function for the datapoints. 
-	\[f(x) = \sum_{i}\alpha_ik(x_i, x) \approx \sum_{i}\alpha_iz(x_i)^\text{T}z(x) 
-	= \beta^\text{T}z(x) = \hat{f}(x)
-	\] (the first equality holds due to Representer Theorem)
-	Where $\beta = \sum_{i}\alpha_iz(x_i) $.
-	The norm of the function from the random fourier features approximation is:
-	\[ \norm{\beta} =   \beta^\text{T} \bar{\beta} = 
-	(\sum_{i}\alpha_i z^\text{T}(x_i)) (\sum_{i}\bar{\alpha}_i\bar{z}(x_i)) 
-	= \sum_i \sum_j \alpha_i \bar{\alpha}_j z^\text{T}(x_i)\bar{z}(x_j)  
-	\approx \sum_i \sum_j \alpha_i \bar{ \alpha_j} k(x_i, x_j)
-	= \norm{f}
-	\]
-\end{proof}
-
 \chapter{Other Notes}
 \section{Weaknesses}
 Huge sample size, density of adversarial examples.
@@ -794,7 +845,6 @@ Huge sample size, density of adversarial examples.
 % If you want to include appendices, just use the \appendix command and then make chapters as normal
 \appendix
 \chapter{Your first appendix}
-
 
 See \url{https://www.overleaf.com/read/qyhckhfyfvmb} on Overleaf for useful examples of formatted text, typing in IPA, etc.
 

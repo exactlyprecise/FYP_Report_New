@@ -11,15 +11,18 @@
 \BOOKMARK [1][-]{section.2.2}{Definition and Properties}{chapter.2}% 11
 \BOOKMARK [1][-]{section.2.3}{Reproducing Kernel Hilbert Spaces}{chapter.2}% 12
 \BOOKMARK [0][-]{chapter.3}{Overfitted and Interpolated Kernel Classifiers}{}% 13
-\BOOKMARK [0][-]{chapter.4}{Approximation and Estimation}{}% 14
-\BOOKMARK [1][-]{section.4.1}{Notations}{chapter.4}% 15
-\BOOKMARK [1][-]{section.4.2}{Interpolation Estimates}{chapter.4}% 16
-\BOOKMARK [1][-]{section.4.3}{Approximation Theorem}{chapter.4}% 17
-\BOOKMARK [0][-]{chapter.5}{Existing Bounds}{}% 18
-\BOOKMARK [1][-]{section.5.1}{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{chapter.5}% 19
-\BOOKMARK [0][-]{chapter.6}{Experiments}{}% 20
-\BOOKMARK [1][-]{section.6.1}{Random Fourier Features}{chapter.6}% 21
-\BOOKMARK [0][-]{chapter.7}{Other Notes}{}% 22
-\BOOKMARK [1][-]{section.7.1}{Weaknesses}{chapter.7}% 23
-\BOOKMARK [0][-]{appendix.A}{Your first appendix}{}% 24
-\BOOKMARK [0][-]{section*.5}{Bibliography}{}% 25
+\BOOKMARK [0][-]{chapter.4}{Existing Bounds}{}% 14
+\BOOKMARK [1][-]{section.4.1}{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{chapter.4}% 15
+\BOOKMARK [0][-]{chapter.5}{Double Descent}{}% 16
+\BOOKMARK [1][-]{section.5.1}{Double Descent Curve}{chapter.5}% 17
+\BOOKMARK [1][-]{section.5.2}{Random Fourier Features}{chapter.5}% 18
+\BOOKMARK [1][-]{section.5.3}{Experiment}{chapter.5}% 19
+\BOOKMARK [1][-]{section.5.4}{Plausible Explanations}{chapter.5}% 20
+\BOOKMARK [0][-]{chapter.6}{Approximation and Estimation}{}% 21
+\BOOKMARK [1][-]{section.6.1}{Notations}{chapter.6}% 22
+\BOOKMARK [1][-]{section.6.2}{Interpolation Estimates}{chapter.6}% 23
+\BOOKMARK [1][-]{section.6.3}{Approximation Theorem}{chapter.6}% 24
+\BOOKMARK [0][-]{chapter.7}{Other Notes}{}% 25
+\BOOKMARK [1][-]{section.7.1}{Weaknesses}{chapter.7}% 26
+\BOOKMARK [0][-]{appendix.A}{Your first appendix}{}% 27
+\BOOKMARK [0][-]{section*.5}{Bibliography}{}% 28
