@@ -128,9 +128,13 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		Let the complex Gaussian RBF kernel (on $\CC^d$)be defined as:
 		\[ k_{\gamma, \CC^d}(z, z') := e^{-\gamma^{-2} \sum_{i=1}^{d} (z_i - z_i'^*)^2 } .\]
 		We then define the real Gaussian RBF kernel (or simply the Gaussian RBF kernel for short) acting on $\RR^d$ as:
-		\[ k_\gamma(x, x') = e^{- \gamma^{-2} \norm{x - x'}_2^2} \]
+		\[ k_\gamma(x, x') = e^{- \gamma^{-2} \norm{x - x'}_2^2}. \]
 	\end{defn}
-	It can be shown (\cite{steinwartSVM}) that the complex and real Gaussian RBF kernels are kernels.
+	\begin{defn}
+	The Laplacian (or exponential) acting on $\RR^d$ is defined as:
+	\[ k_\gamma(x, x') = e^{- \gamma^{-1} \norm{x - x'}_2}. \]	
+	\end{defn}
+	It can be shown (\cite{steinwartSVM}) that the complex and real Gaussian RBF kernels and the Laplacian kernel are kernels.
 	\begin{defn}
 		For a non-empty set $X$, a function $k: X \times X \rightarrow \RR$ is said to be a positive definite if, for any $m \in \ZZ^+ \cup \{0\}$ and all $x_1, ..., x_n \in X$, we have the following matrix (called the Gram matrix) being positive semi-definite:
 		\[ K := (k(x_i, x_j))_{i,j}. \]
@@ -287,9 +291,41 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 
 \chapter{Overfitted and Interpolated Kernel Classifiers}
 We shall give experimental results performed in \cite{UnderstandKernel} that show the strong generalization performance also appears in kernel classifiers.
-	
+\section{Rationale}
+The aim is to have interpolated solutions which fits the data perfectly, thus having no regularization. A form of inductive bias is to be introduced to choose the solution with special properties. Though no finite number of functions in the RKHS are able to fit the training data, minimum norm RKHS solutions can be obtained using Representer Theorem. Some rationale behind choosing the minimum norm solution as the inductive bias is introduced in section \ref{sec:AppThm}.
+\section{Training}
+We have a set of training datapoints $\{ (x_i. y_i), ..., (x_n, y_n) \}, (x_i, y_i) \in \RR^d \times \RR$
+Let $k: \RR^d \times \RR^d \rightarrow \RR$ be a kernel. Let $\HH$ denote the RKHS corresponding to the kernel $k$. Let $f^*$ denote the minimum norm interpolant given the datapoints, i.e.
+\begin{equation*}
+f^* = \arg \min_{f \in \HH, f(x_i) = y_i, 1 \leq i \leq n} (\norm{f}_{\HH}).
+\end{equation*}
+We know that by representer theorem \ref{thm:Representer},$f^*$ can be represented in form of:
+\[ f^*(\cdot) = \sum_{i} a^*_i k(x_i, \cdot). \]
+Due to its interpolating properties, we know that for $a^* = (a^*_1, ..., a^*_n)^\Trans$,
+\begin{equation} \label{eqn:interpolation_solution}
+a^* = K^{-1} (y_1, ..., y_n)^\Trans
+\end{equation}
+for $K \in \RR^{d,d}$ is the matrix where $K_{i,j} = k(x_i, x_j)$.
+We also know that:
+\[ \norm{f^*}_\HH = \sum_{i,j=1}^{n} a^*_i a^*_j k(x_i, x_j) = a^{*\Trans} K a^*. \]
+Due to the time complexity required to solve $a^*$, iterative methods were used in the paper, where:
+\begin{equation*}
+a^* = \arg \min_{a} \sum_{i} l(Ka, y_i)
+\end{equation*}
+for loss function $l$.\\
+The Gaussian RBF kernel and Laplacian RBF kernels were used.
+\section{Results}
+The models were trained till mean square loss on the training dataset approaches zero. It is noted that the benefits of early stopping regularization were little to none in terms of test regression or classification error.\\
+Regardless of using iterative or direct \ref{eqn:interpolation_solution} methods, the interpolated solution performed close to optimal, as seen in the figure \ref{fig:Interpolated_Kernel}.
 
-\chapter{Existing Bounds}
+\begin{figure}
+	\centering
+	\includegraphics[width=1.2\textwidth]{"Images/Interpolated_Kernel_1.png}
+	\includegraphics[width=1.2\textwidth]{"Images/Interpolated_Kernel_2.png}
+	\par
+	\caption{"ce" refers to classification error, and mse refers to the mean square loss. All methods resulted in 0\% classification error on the training set. All datasets were subsampled to reduce complexity required to train.} \label{fig:Interpolated_Kernel}
+\end{figure}
+
 \section{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers} \label{sec:BoundsKernel}
 Steps are: 
 \begin{itemize}
@@ -424,7 +460,7 @@ Where $w_1,..., w_N \in \RR^d$ are sampled independently from the standard Gauss
 \subsection{Algorithm}
 Choose $a = (a_1,..., a_N)$ only through minimization of the square loss, i.e.
 \[ \min_{a} \frac{1}{n} \sum_{k=1}^{n}(h_N(x_k) - y_k)^2. \]
-However, when the minimizer is not unique (which will be the case when $N > n$), choose $a$ such that it has the smallest L2-norm out of all the minimizers. We give some rationale as to choosing the smallest norm in the section \ref{sec:AppThm}.\\
+However, when the minimizer is not unique (which will be the case when $N > n$), choose $a$ such that it has the smallest L2-norm out of all the minimizers. \\
 This choice of norm for $a$ is meant to be similar to the RKS norm $\norm{h}_{\HH_\infty}$. Below, we give a sketch as to the reason:
 
 	Let $f(x)$ be the minimum norm RKHS interpolant function for the datapoints. 
@@ -453,7 +489,7 @@ The initial part of the curve as $N < n$ follows a standard U-shaped descent cur
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1.3\textwidth]{"Images/RFF_Exp.png}
+	\includegraphics[width=1.2\textwidth]{"Images/RFF_Exp.png}
 	\par
 	\caption{Experimental Results: RFF function class on MNIST. $n=10^4$, test risk and coefficient norm is in logarithmic scale.} \label{fig:RFF_Exp}
 \end{figure}
@@ -839,6 +875,20 @@ where $d(x, x')$ is the pseudometric defined by:
 Intuitively, we can see the "speed" of which the function can change is bounded by the norm of the function in the RKHS space.
 
 \chapter{Other Notes}
+DRAFT TODO
+Performance of overfitted/interpolated kernel classifiers closely parallels behaviors of deep
+networks noted in [ZBH+ 16] which fit the data exactly (only the classification error is reported
+there, other references also report MSE [CCSL16, HLWvdM16, SEG+ 17, BFT17]). We note that
+observations of unexpectedly strong performance of overfitted classifiers have been made before.
+For example, in kernel methods it has been observed on multiple occasions that very small values
+of regularization parameters frequently lead to optimal performance [SSSSC11, TBRS13]. Similar
+observations were also made for Adaboost and Random Forests [SFBL98] (see [WOBM17] for
+7
+a recent and quite different take on that). However, we have not seen recognition or systematic
+exploration of this (apparently ubiquitous) phenomenon for kernel methods, and, more generally,
+in connection to interpolated classifiers and generalization with respect to the square loss.\\
+ADD LOOG LETTER.
+
 \section{Weaknesses}
 Huge sample size, density of adversarial examples.
 

@@ -11,18 +11,20 @@
 \BOOKMARK [1][-]{section.2.2}{Definition and Properties}{chapter.2}% 11
 \BOOKMARK [1][-]{section.2.3}{Reproducing Kernel Hilbert Spaces}{chapter.2}% 12
 \BOOKMARK [0][-]{chapter.3}{Overfitted and Interpolated Kernel Classifiers}{}% 13
-\BOOKMARK [0][-]{chapter.4}{Existing Bounds}{}% 14
-\BOOKMARK [1][-]{section.4.1}{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{chapter.4}% 15
-\BOOKMARK [0][-]{chapter.5}{Double Descent}{}% 16
-\BOOKMARK [1][-]{section.5.1}{Double Descent Curve}{chapter.5}% 17
-\BOOKMARK [1][-]{section.5.2}{Random Fourier Features}{chapter.5}% 18
-\BOOKMARK [1][-]{section.5.3}{Experiment}{chapter.5}% 19
-\BOOKMARK [1][-]{section.5.4}{Plausible Explanations}{chapter.5}% 20
-\BOOKMARK [0][-]{chapter.6}{Approximation and Estimation}{}% 21
-\BOOKMARK [1][-]{section.6.1}{Notations}{chapter.6}% 22
-\BOOKMARK [1][-]{section.6.2}{Interpolation Estimates}{chapter.6}% 23
-\BOOKMARK [1][-]{section.6.3}{Approximation Theorem}{chapter.6}% 24
-\BOOKMARK [0][-]{chapter.7}{Other Notes}{}% 25
-\BOOKMARK [1][-]{section.7.1}{Weaknesses}{chapter.7}% 26
-\BOOKMARK [0][-]{appendix.A}{Your first appendix}{}% 27
-\BOOKMARK [0][-]{section*.5}{Bibliography}{}% 28
+\BOOKMARK [1][-]{section.3.1}{Rationale}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.2}{Training}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.3}{Results}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.4}{Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{chapter.3}% 17
+\BOOKMARK [0][-]{chapter.4}{Double Descent}{}% 18
+\BOOKMARK [1][-]{section.4.1}{Double Descent Curve}{chapter.4}% 19
+\BOOKMARK [1][-]{section.4.2}{Random Fourier Features}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.3}{Experiment}{chapter.4}% 21
+\BOOKMARK [1][-]{section.4.4}{Plausible Explanations}{chapter.4}% 22
+\BOOKMARK [0][-]{chapter.5}{Approximation and Estimation}{}% 23
+\BOOKMARK [1][-]{section.5.1}{Notations}{chapter.5}% 24
+\BOOKMARK [1][-]{section.5.2}{Interpolation Estimates}{chapter.5}% 25
+\BOOKMARK [1][-]{section.5.3}{Approximation Theorem}{chapter.5}% 26
+\BOOKMARK [0][-]{chapter.6}{Other Notes}{}% 27
+\BOOKMARK [1][-]{section.6.1}{Weaknesses}{chapter.6}% 28
+\BOOKMARK [0][-]{appendix.A}{Your first appendix}{}% 29
+\BOOKMARK [0][-]{section*.5}{Bibliography}{}% 30
