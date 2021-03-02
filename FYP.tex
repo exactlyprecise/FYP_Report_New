@@ -316,7 +316,8 @@ for loss function $l$.\\
 The Gaussian RBF kernel and Laplacian RBF kernels were used.
 \section{Results}
 The models were trained till mean square loss on the training dataset approaches zero. It is noted that the benefits of early stopping regularization were little to none in terms of test regression or classification error.\\
-Regardless of using iterative or direct \ref{eqn:interpolation_solution} methods, the interpolated solution performed close to optimal, as seen in the figure \ref{fig:Interpolated_Kernel}.
+Regardless of using iterative or direct \ref{eqn:interpolation_solution} methods, the interpolated solution performed close to optimal, as seen in the figure \ref{fig:Interpolated_Kernel}.\\
+This good performance is similar to deep neural networks that interpolate the training data, as seen in sources such as \cite{Zhang_Deep_Learning}.
 
 \begin{figure}
 	\centering
@@ -367,7 +368,7 @@ The right side on this will tend to infinity for bigger $\norm{f}_\mathcal{H}$, 
 
 \section{Double Descent Curve}
 As proposed in \cite{Belkin_2019}, a way to reconcile the classical Machine Learning curve with modern machine overparemeterization practice is the double descent curve. As seen in the figure \ref{fig:Double_Descent}, the first part of the curve, when the capacity of $\HH$ (which is a general term, and can mean things like the VC-Dimension. In this case, we take it to be the number of free parameters in the model) is smaller, it resembles the classical U-shaped curve. However, when the capacity of $\HH$ increases further, the test risk hits a maximum (typically at the point of interpolation), and further increase of capacity of $\HH$ decreases the test risk, sometimes to the point of the graph going below the minimum of the initial U-shaped curve itself. \\
-This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in section \ref{sec:RFF_Exp}.
+This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in section \ref{sec:RFF_Exp}. Another experimental demonstration of the double scent curve is described in the appendix, with artificial data and noise.
 
 \begin{figure}
 	\centering
@@ -453,7 +454,7 @@ with randomly drawn $w_i$ and $b_i$ as described previously.
 \section{Experiment} \label{sec:RFF_Exp}
 \subsection{Function Class}
 Assume we have datapoints $\{(x_j, y_j)\}_{1 \leq j \leq n}$, where $x_j \in \RR^d$, $y_j \in \RR$.\\
-Let $\xi(x;w) := \exp(i w^\Trans x)$.
+Let $\xi(x;w) := \exp(\sqrt{-1} ~ w^\Trans x)$.
 Consider the class of functions, $\HH_N$ with $N$ number of complex free parameters. That consist of $h_N: \RR \rightarrow \CC$ where:
 \[ h_N(x) = \sum_{j=1}^{N} a_j \xi(x;w_j). \]
 Where $w_1,..., w_N \in \RR^d$ are sampled independently from the standard Gaussian distribution. With this, $\HH_N$ becomes a better approximation of the RKHS corresponding to the Gaussian RBF kernel when $N$ is huge. We denote the RKHS corresponding ot the Gaussian RBF kernel with $H_\infty$. As per standard machine learning procedure, we want to find $a_1, ..., a_N$ so that the function $h_N \in \HH_N$ is predicts $y$ given unseen $x$ well.
@@ -875,29 +876,42 @@ where $d(x, x')$ is the pseudometric defined by:
 Intuitively, we can see the "speed" of which the function can change is bounded by the norm of the function in the RKHS space.
 
 \chapter{Other Notes}
-DRAFT TODO
-Performance of overfitted/interpolated kernel classifiers closely parallels behaviors of deep
-networks noted in [ZBH+ 16] which fit the data exactly (only the classification error is reported
-there, other references also report MSE [CCSL16, HLWvdM16, SEG+ 17, BFT17]). We note that
-observations of unexpectedly strong performance of overfitted classifiers have been made before.
-For example, in kernel methods it has been observed on multiple occasions that very small values
-of regularization parameters frequently lead to optimal performance [SSSSC11, TBRS13]. Similar
-observations were also made for Adaboost and Random Forests [SFBL98] (see [WOBM17] for
-7
-a recent and quite different take on that). However, we have not seen recognition or systematic
-exploration of this (apparently ubiquitous) phenomenon for kernel methods, and, more generally,
-in connection to interpolated classifiers and generalization with respect to the square loss.\\
-ADD LOOG LETTER.
+It has been oberved in earlier papers (for example, \cite{Shalev_Shwartz_2010}) that low regularization results in optimal performance for kernel machines. Similarly strong performance has also been seen in Random Forests and Adaboost (\cite{Random_Forests_2017}).
 
 \section{Weaknesses}
-Huge sample size, density of adversarial examples.
+The double descent curve is harder to observe in multilayer neural networks. One of the reasons being that it is very sensitive to initialization when the model is underparameterized.\\
+Also as shown in \cite{Belkin_Overfitting}, adversarial examples are unavoidable when using interpolation learning in non-deterministic data labels. As the sample size increases, the adversarial cases are asymptotically dense, so there is always an adversarial example arbitrarily close to any point.
+
 
 % If you want to include appendices, just use the \appendix command and then make chapters as normal
 \appendix
-\chapter{Your first appendix}
-
-See \url{https://www.overleaf.com/read/qyhckhfyfvmb} on Overleaf for useful examples of formatted text, typing in IPA, etc.
-
+\chapter{Appendix}
+\section{Artificial Data and Noise}
+\subsection{setup}
+The paper looks at the double descent surve  in the situation of artificial data. Define a function $e_k: [0, 2\pi] \rightarrow \CC$ where
+\[ e_k(\cdot) := \exp(\sqrt{-1}(k - 1) \cdot) \]
+where $k \in \ZZ^+$. Define a probability distribution $p$ on the set of positive integers. Denote $p_k = \PP(k), j \in \ZZ^+$.
+Let the target function be
+\[ h^*(\cdot) = \sum_{k \in \ZZ^+} p_k e_k(\cdot)\]
+and the datapoints $(x_1, y_1), ..., (x_n, y_n)$ be $x_j \in [0, 2\pi]$ and 
+\[ y_j = h^*(x_j) + \sigma\epsilon_j \]
+where $\epsilon_1,..., \epsilon_n$ are sampled independently fromthe  the standard normal distribution.\\
+The signal-to-noise ratio is defined as:
+\[ \text{SNR} = \frac{\EE[h^*(x_i)^2]}{\sigma^2}. \]
+The function class $\HH_N$ is randomly chosen by:
+\begin{itemize}
+	\item Choose $N$ positive integers $k_1,..., k_N$ sampling from $p$ independently.
+	\item Consider the span of the functions $\{ e_{k_1},..., e_{k_N} \}$ as the function class $\HH_N$.
+\end{itemize}
+The regime of choosing the function from the function class is similar to what was used in the RFF experiment \ref{sec:RFF_Exp}. Choose the function smallest square error in the training data. When the training error is 0 (when $N \geq n$), choose the smallest norm function with 0 least squares error, where the norm of the function $h = \sum_{j=1}^{N} a_{k_j} e_{k_j} $is defined as: $\norm{h}^2_\HH = \sum_{k}\frac{a_k}{p_k}$. Intuitively, there is a greater penalty for a smaller $p_k$, where an $e_k$ is less likely to be chosen at random.
+\subsection{Results}
+The experiment was repeated over multiple $n$, multiple SNR (by varying $\sigma$), and repeated 20 times, and the double descent curves were observed. An example shown is in Figure \ref{fig:Synthetic_Exp}.
+\begin{figure}
+	\centering
+	\includegraphics[width=1.2\textwidth]{"Images/Synthetic_Exp.png}
+	\par
+	\caption{Left: Noiseless labels. Right: SNR=20. Top: Test MSE. Bottom: norm of function $\norm{h}_\HH$.} \label{fig:Synthetic_Exp}
+\end{figure}
 % For the bibliography style, I load `sp.bst', the style used by the LSA in the journal `Semantics and Pragmatics'. For how to include in-line citations with page numbers and other conventions, refer to nus-el-ht.sty. 
 \backmatter
 \bibliography{el-ht.bib}

@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -22,8 +22,15 @@ Belkin, Mikhail, Daniel Hsu, Siyuan Ma \& Soumik Mandal. 2019.
 \newblock \doi{10.1073/pnas.1903070116}.
 \newblock \urlprefix\url{https://doi.org/10.1073%2Fpnas.1903070116}.
 
-\bibitem[{Belkin et~al.(2018)Belkin, Ma \& Mandal}]{UnderstandKernel}
-Belkin, Mikhail, Siyuan Ma \& Soumik Mandal. 2018.
+\bibitem[{Belkin et~al.(2018{\natexlab{a}})Belkin, Hsu \&
+  Mitra}]{Belkin_Overfitting}
+Belkin, Mikhail, Daniel Hsu \& Partha Mitra. 2018{\natexlab{a}}.
+\newblock Overfitting or perfect fitting? risk bounds for classification and
+  regression rules that interpolate.
+
+\bibitem[{Belkin et~al.(2018{\natexlab{b}})Belkin, Ma \&
+  Mandal}]{UnderstandKernel}
+Belkin, Mikhail, Siyuan Ma \& Soumik Mandal. 2018{\natexlab{b}}.
 \newblock To understand deep learning we need to understand kernel learning.
 \newblock \emph{arxiv:1802.01396}
   \urlprefix\url{http://arxiv.org/abs/1802.01396v3}.
@@ -80,6 +87,14 @@ Schölkopf, Bernhard, Ralf Herbrich \& Alex~J. Smola. 2001.
 \newblock \doi{10.1007/3-540-44581-1_27}.
 \newblock \urlprefix\url{https://doi.org/10.1007%2F3-540-44581-1_27}.
 
+\bibitem[{Shalev-Shwartz et~al.(2010)Shalev-Shwartz, Singer, Srebro \&
+  Cotter}]{Shalev_Shwartz_2010}
+Shalev-Shwartz, Shai, Yoram Singer, Nathan Srebro \& Andrew Cotter. 2010.
+\newblock Pegasos: primal estimated sub-gradient solver for {SVM}.
+\newblock \emph{Math. Program.} 127(1). 3--30.
+\newblock \doi{10.1007/s10107-010-0420-4}.
+\newblock \urlprefix\url{https://doi.org/10.1007%2Fs10107-010-0420-4}.
+
 \bibitem[{Steinwart \& Christmann(2008)}]{steinwartSVM}
 Steinwart, Ingo \& Andreas Christmann. 2008.
 \newblock \emph{Support vector machines}.
@@ -93,6 +108,12 @@ Wendland, Holger. 2004.
 \newblock Cambridge Monographs on APplied and Computational Mathematics.
   Cambridge University Press.
 \newblock \doi{10.1017/CBO9780511617539}.
+
+\bibitem[{Wyner et~al.(2015)Wyner, Olson, Bleich \&
+  Mease}]{Random_Forests_2017}
+Wyner, Abraham~J., Matthew Olson, Justin Bleich \& David Mease. 2015.
+\newblock Explaining the success of adaboost and random forests as
+  interpolating classifiers.
 
 \bibitem[{Zhang et~al.(2016)Zhang, Bengio, Hardt, Recht \&
   Vinyals}]{Zhang_Deep_Learning}
