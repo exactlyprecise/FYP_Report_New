@@ -34,7 +34,9 @@
 \contentsline {chapter}{\chapternumberline {6}Other Notes}{37}{chapter.6}
 \contentsline {section}{\numberline {6.1}Weaknesses}{37}{section.6.1}
 \contentsline {appendix}{\chapternumberline {A}Appendix}{39}{appendix.A}
-\contentsline {section}{\numberline {A.1}Artificial Data and Noise}{39}{section.A.1}
-\contentsline {subsection}{\numberline {A.1.1}setup}{39}{subsection.A.1.1}
+\contentsline {section}{\numberline {A.1}Results with Artificial Data and Noise}{39}{section.A.1}
+\contentsline {subsection}{\numberline {A.1.1}Setup}{39}{subsection.A.1.1}
 \contentsline {subsection}{\numberline {A.1.2}Results}{40}{subsection.A.1.2}
-\contentsline {chapter}{Bibliography}{41}{section*.5}
+\contentsline {section}{\numberline {A.2}Results with Random Forests}{40}{section.A.2}
+\contentsline {subsection}{\numberline {A.2.1}Setup}{40}{subsection.A.2.1}
+\contentsline {chapter}{Bibliography}{43}{section*.5}

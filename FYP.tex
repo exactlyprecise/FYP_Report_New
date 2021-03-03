@@ -48,7 +48,7 @@
 Special thanks to my research supervisor, Prof. Subhroshekhar Ghosh, for guiding me in the direction to take the research, and for the time he spent teaching me the concepts.
 	
 \begin{abstract}
-	The bias-variance tradeoff is a tenet of classical Machine Learning practice, where the algorithm tries to balance the error from the bias term and variance term, typically by means of controlling the richness of the model to find a sweet spot between underfitting and overfitting. However, in many modern Machine Learning practices, the model is made to highly overfit the data, even up till the point of near interpolation. This is done even under the conditions of large amounts of data and noise.\\
+	The bias-variance tradeoff is an important concept of classical Machine Learning practice, where the algorithm tries to balance the error from the bias term and variance term, typically by means of controlling the richness of the model to find a sweet spot between underfitting and overfitting. However, in many modern Machine Learning practices, the model is made to highly overfit the data, even up till the point of near interpolation. This is done even under the conditions of large amounts of data and noise.\\
 	The papers discussed in this thesis show that this happens not only in deep learning, but also kernel machines with close to 0 training error, and why current generalization bounds do not explain such phenomenon well. Additionally, a paper proposes a possible performance curve to explain how overfitting could be beneficial, and some empirical evidence to support this.
 \end{abstract}
 	
@@ -299,7 +299,7 @@ Let $k: \RR^d \times \RR^d \rightarrow \RR$ be a kernel. Let $\HH$ denote the RK
 \begin{equation*}
 f^* = \arg \min_{f \in \HH, f(x_i) = y_i, 1 \leq i \leq n} (\norm{f}_{\HH}).
 \end{equation*}
-We know that by representer theorem \ref{thm:Representer},$f^*$ can be represented in form of:
+We know that by representer theorem (\ref{thm:Representer}),$f^*$ can be represented in form of:
 \[ f^*(\cdot) = \sum_{i} a^*_i k(x_i, \cdot). \]
 Due to its interpolating properties, we know that for $a^* = (a^*_1, ..., a^*_n)^\Trans$,
 \begin{equation} \label{eqn:interpolation_solution}
@@ -364,6 +364,7 @@ Now to prove Theorem \ref{thm:normBound}:
 	\begin{equation*}
 	\begin{split}
 	(\log(R/\gamma))^d &> O(n) \\
+	\implies log(R/\gamma) &> O(n^{1/d}) \\
 	\implies R &> c_1 \text{ exp}(c_2(n)^{1/d})
 	\end{split}
 	\end{equation*}
@@ -378,7 +379,7 @@ This shows that current bounds are insufficient to explain performance on interp
 
 \section{Double Descent Curve}
 As proposed in \cite{Belkin_2019}, a way to reconcile the classical Machine Learning curve with modern machine overparemeterization practice is the double descent curve. As seen in the figure \ref{fig:Double_Descent}, the first part of the curve, when the capacity of $\HH$ (which is a general term, and can mean things like the VC-Dimension. In this case, we take it to be the number of free parameters in the model) is smaller, it resembles the classical U-shaped curve. However, when the capacity of $\HH$ increases further, the test risk hits a maximum (typically at the point of interpolation), and further increase of capacity of $\HH$ decreases the test risk, sometimes to the point of the graph going below the minimum of the initial U-shaped curve itself. \\
-This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in section \ref{sec:RFF_Exp}. Another experimental demonstration of the double scent curve is described in the appendix, with artificial data and noise.
+This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in section \ref{sec:RFF_Exp}. Some other experimental demonstrations of the double descent curve aredescribed in the appendix, for random forests, and with artificial data and noise.
 
 \begin{figure}
 	\centering
@@ -896,8 +897,8 @@ Also as shown in \cite{Belkin_Overfitting}, adversarial examples are unavoidable
 % If you want to include appendices, just use the \appendix command and then make chapters as normal
 \appendix
 \chapter{Appendix}
-\section{Artificial Data and Noise}
-\subsection{setup}
+\section{Results with Artificial Data and Noise}
+\subsection{Setup}
 The paper looks at the double descent surve  in the situation of artificial data. Define a function $e_k: [0, 2\pi] \rightarrow \CC$ where
 \[ e_k(\cdot) := \exp(\sqrt{-1}(k - 1) \cdot) \]
 where $k \in \ZZ^+$. Define a probability distribution $p$ on the set of positive integers. Denote $p_k = \PP(k), j \in \ZZ^+$.
@@ -921,6 +922,18 @@ The experiment was repeated over multiple $n$, multiple SNR (by varying $\sigma$
 	\includegraphics[width=1.2\textwidth]{"Images/Synthetic_Exp.png}
 	\par
 	\caption{Left: Noiseless labels. Right: SNR=20. Top: Test MSE. Bottom: norm of function $\norm{h}_\HH$.} \label{fig:Synthetic_Exp}
+\end{figure}
+\section{Results with Random Forests}
+\subsection{Setup}
+The (real life) training data are trained using random forests for regression problems, as described in \cite{Breiman_2001}. The number of features to be selected when splitting a node is the square root of the number of total features. The maximum number of leaves in each tree (denoted by $N_{leaf}^{max}$), and the number of trees (denoted by $N_{tree}$) are varied to change the capacity of the function class. There is also no constraints on the depth of each tree, or when to split the tree node.
+At most $n$ nodes is required for a tree to interpolate $n$ samples (though the tree tends to interpolate with fewer leaves).\\
+Training data was interpolated in 2 different ways. In Figure \ref{fig:Random_Forests} (A), the experiments were run with no bootstrap re-sampling, as describe in \cite{Cutler_2001}. In (B), the same experiments were run with bootstrap re-sampling. Note that the training data can be interpolated with a single tree with no bootstrap re-sampling, but have to be interpolated with multiple trees with bootstrap resampling.\\
+As we can see in the figure, the double descent curve can be observed in both cases, though they tend to be less obvious in the zero-one loss graphs.
+\begin{figure}
+	\centering
+	\includegraphics[width=1.2\textwidth]{"Images/Random_Forests.png}
+	\par
+	\caption{Model capacity altered with $N_{leaf}^{max}$ and $N_{tree}$.(A): Bootstrap re-sampling disabled. (B): Bootstrap re-sampling enabled.} \label{fig:Random_Forests}
 \end{figure}
 % For the bibliography style, I load `sp.bst', the style used by the LSA in the journal `Semantics and Pragmatics'. For how to include in-line citations with page numbers and other conventions, refer to nus-el-ht.sty. 
 \backmatter

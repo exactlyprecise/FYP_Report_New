@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -35,10 +35,21 @@ Belkin, Mikhail, Siyuan Ma \& Soumik Mandal. 2018{\natexlab{b}}.
 \newblock \emph{arxiv:1802.01396}
   \urlprefix\url{http://arxiv.org/abs/1802.01396v3}.
 
+\bibitem[{Breiman(2001)}]{Breiman_2001}
+Breiman, Leo. 2001.
+\newblock \emph{Machine Learning} 45(1). 5--32.
+\newblock \doi{10.1023/a:1010933404324}.
+\newblock \urlprefix\url{https://doi.org/10.1023%2Fa%3A1010933404324}.
+
 \bibitem[{Canziani et~al.(2016)Canziani, Paszke \& Culurciello}]{Alfredo2016}
 Canziani, Alfredo, Adam Paszke \& Eugenio Culurciello. 2016.
 \newblock An analysis of deep neural network models for practical applications
   .
+
+\bibitem[{Cutler \& Zhao(2001)}]{Cutler_2001}
+Cutler, Adele \& Guohua Zhao. 2001.
+\newblock Pert-perfect random tree ensembles.
+\newblock \emph{Computing Science and Statistics} 33.
 
 \bibitem[{K{\'{e}}gl et~al.(2001)K{\'{e}}gl, Linder \& Lugosi}]{LossFATBound}
 K{\'{e}}gl, Bal{\'{a}}zs, Tam{\'{a}}s Linder \& G{\'{a}}bor Lugosi. 2001.
