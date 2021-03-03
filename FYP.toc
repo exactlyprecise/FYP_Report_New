@@ -16,7 +16,7 @@
 \contentsline {section}{\numberline {3.1}Rationale}{13}{section.3.1}
 \contentsline {section}{\numberline {3.2}Training}{13}{section.3.2}
 \contentsline {section}{\numberline {3.3}Results}{14}{section.3.3}
-\contentsline {section}{\numberline {3.4}Existing Bounds Provide No Guarantees for Interpolated Kernel Classifiers}{14}{section.3.4}
+\contentsline {section}{\numberline {3.4}Existing Bounds for Interpolated Kernel Classifiers}{14}{section.3.4}
 \contentsline {chapter}{\chapternumberline {4}Double Descent}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}Double Descent Curve}{19}{section.4.1}
 \contentsline {section}{\numberline {4.2}Random Fourier Features}{20}{section.4.2}

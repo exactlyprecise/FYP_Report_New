@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{}
@@ -60,6 +60,15 @@ Rahimi, Ali \& Benjamin Recht. 2008.
   Associates, Inc.
 \newblock
   \urlprefix\url{https://proceedings.neurips.cc/paper/2007/file/013a006f03dbc5392effeb8f18fda755-Paper.pdf}.
+
+\bibitem[{Rudi et~al.(2015)Rudi, Camoriano \& Rosasco}]{Rudi_2015}
+Rudi, Alessandro, Raffaello Camoriano \& Lorenzo Rosasco. 2015.
+\newblock Less is more: Nystr\"{o}m computational regularization.
+\newblock In C.~Cortes, N.~Lawrence, D.~Lee, M.~Sugiyama \& R.~Garnett (eds.),
+  \emph{Advances in neural information processing systems}, vol.~28, Curran
+  Associates, Inc.
+\newblock
+  \urlprefix\url{https://proceedings.neurips.cc/paper/2015/file/03e0704b5690a2dee1861dc3ad3316c9-Paper.pdf}.
 
 \bibitem[{Rudin(1990)}]{Rudin_1990}
 Rudin, Walter. 1990.
