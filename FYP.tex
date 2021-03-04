@@ -27,7 +27,7 @@
 \setlength\parindent{0pt}
 
 % Titling commands. 
-\title{Honours Thesis Template}
+\title{Bias-Variance Tradeoff, Overfitting and the Double Descent Curve}
 \author{Ng Wei Le}
 \supervisor {Assistant Professor Subhroshekhar Ghosh}
 \degree{Bachelor of Science with Honours}
@@ -124,7 +124,7 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		Let $k_1, k_2$ be kernels on a non-empty set $X$. Then $k_1 + k_2$ and $ak_1, a \in \RR^+ \cup \{0\}$ are kernels. 
 	\end{lem}
 	Below, we define the Gaussian RBF kernel:
-	\begin{defn}
+	\begin{defn}\label{defn:Gaussian_Kernel}
 		Let the complex Gaussian RBF kernel (on $\CC^d$)be defined as:
 		\[ k_{\gamma, \CC^d}(z, z') := e^{-\gamma^{-2} \sum_{i=1}^{d} (z_i - z_i'^*)^2 } .\]
 		We then define the real Gaussian RBF kernel (or simply the Gaussian RBF kernel for short) acting on $\RR^d$ as:
@@ -240,17 +240,17 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 	\end{proof}
 	
 	\subsection{Representer Theorem} \label{subsec:RepThm}
-	Representer Theorem ensures that the $argmin$ of an empirical risk expression involving a function over an RKHS can be expressed as a linear combination of kernels applied on the training data points as proven in \cite{Representer_Theorem}.
+	Representer Theorem ensures that the argmin of an empirical risk expression involving a function over an RKHS can be expressed as a linear combination of kernels applied on the training data points as proven in \cite{Representer_Theorem}.
 	\begin{thm} \label{thm:Representer}
 		Given a non-empty set $X$, training data $\{(x_1,y_1), ... (x_n,y_n)\} \in X \times \RR$, and RKHS $\mathcal{H}$ be an $\RR$-Hilbert function space over $X$ with reproducing kernel $k:X \times X \rightarrow \RR$. Let $g$ be a strictly increasing function $g:[o, \infty]\rightarrow \RR$, and $l$ be an arbitrary loss function, where $l:(X \times \RR^2)^n \rightarrow \RR \cup \{\infty\}$. \\
 		We want to minimize the following empirical risk term:
 		\[ E(f, (x_1, y_1), ..., (x_n, y_n)) ~ := ~ l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n))) + g(\norm{f}) .\]
-		For $\hat{f} = argmin_{f \in \mathcal{H}} E(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ can be represented in the form:
+		For $\hat{f} = \arg \min_{f \in \mathcal{H}} E(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ can be represented in the form:
 		\[ \hat{f}(\cdot) = \sum_{i=1}^{n} a_i k(\cdot, x_i) \]
 		with $a_i \in \RR$ for all $i$.
 	\end{thm}
 	\begin{proof}
-		First we let $\Phi$ be the canonical feature map of $k$ as defined in \ref{def:CanFeatureMaps}. Recall: function $\Phi: X \rightarrow \mathcal{H}$ where $\Phi(x)(\cdot) = k(\cdot , x)$. Due to the reproducing property where $\Phi(x)(x') = \inner{\Phi(x), k(\cdot, x')}$, we have:
+		First we let $\Phi$ be the canonical feature map of $k$ as defined in \ref{def:CanFeatureMaps}. Recall that function $\Phi: X \rightarrow \mathcal{H}$ where $\Phi(x)(\cdot) = k(\cdot , x)$. Due to the reproducing property where $\Phi(x)(x') = \inner{\Phi(x), k(\cdot, x')}$, we have:
 		\begin{equation*}
 		\begin{split}
 		\Phi(x)(x') &= k(x', x) \\
@@ -280,7 +280,7 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		\end{split}
 		\end{equation*}
 		Therefore, if we have $\gamma = 0$, since $f(x_i)$ is unaffected by this for all $i$, 
-		$l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n)))$ is also unaffected by $\gamma$. For the term $g(\norm{f})$, it decreases if we have $\gamma = 0$. Hence,  $\hat{f} = argmin_{f \in \mathcal{H}} E(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ must have $\gamma = 0$, and 
+		$l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n)))$ is also unaffected by $\gamma$. For the term $g(\norm{f})$, it decreases if we have $\gamma = 0$. Hence,  $\hat{f} = \arg \min_{f \in \mathcal{H}} E(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ must have $\gamma = 0$, and 
 		\begin{equation*}
 		\begin{split}
 		\hat{f} &= \sum_{i=1}^{n} a_i \Phi(x_i) \\
@@ -289,6 +289,29 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		\end{equation*}
 	\end{proof}
 
+\subsection{Gaussian Kernels}
+Additional discussion of the structure of the Gaussian Kernels and their RKHS is provided in this section. We aim to get the formula corresponding to the RKHS of the Gaussian RBF kernel, as discussed in \cite{steinwartSVM}\\
+
+For fixed, $\gamma > 0, d \in \ZZ^+$, given a holomorphiuc function $f: \CC^d \rightarrow \CC$, let:
+\begin{equation} \label{eqn:Complex_RKHS_Norm}
+\norm{f}_{\gamma, \CC^d} := \sqrt{\frac{2^d}{\pi^d\gamma^{2d}} \int_{\CC^d} \abs{f(z)^2}\exp(\gamma^{-2}\sum_{j=1}^{d}(z_j - \bar{z}_j)^2)~dz},
+\end{equation}
+where $\bar(z)$ is the complex conjugate of $z$, and $dz$ is the complex Lebesgue measure on $\CC^d$. Also, let:
+\begin{equation} \label{eqn:Complex_RKHS_Struct}
+\HH_{\gamma, \CC^d} := \{ f: \CC^d \rightarrow \CC ~ | f \text{ is holomorphic, } \norm{f}_{\gamma, \CC^d} < \infty \}.
+\end{equation}
+$\HH_{\gamma, \CC^d} $ is a $\CC$ vector space with pre-Hilbert norm in (\ref{eqn:Complex_RKHS_Norm}). Our goal is to show that it corresponds to the RKHS of the complex Gaussian RBF kernel, defined in (\ref{defn:Gaussian_Kernel}), $k_{\gamma, \CC^d}$.
+\begin{thm}
+	For $\gamma > 0, \text{ and } d \in \ZZ^+$, $(\HH_{\gamma, \CC^d}, \norm{f}_{\gamma, \CC^d})$ is an RKHS corresponding to $k_{\gamma, \CC^d}$. Also, define the function:
+	\begin{equation}
+	e_n(z) := \sqrt{\frac{2^n}{\gamma^{2n}n!}}z^n \exp(-\gamma^{-2} z^2), \hspace{2cm} z \in \CC, ~ n \in \naturalzero,
+	\end{equation}
+	and define functions:
+	\begin{equation}
+	e_{n_1} \otimes ... \otimes e_{n_d} (z_1,...,z_d):= \prod_{j=1}^{d} e_{n_j} (z_j) ,
+	\end{equation}
+	Then $(e_{n_1} \otimes ... \otimes e_{n_d})_{n_1,...,n_d \geq 0}$ is an orthonormal basis of $\HH_{\gamma, \CC^d}$.
+\end{thm}
 \chapter{Overfitted and Interpolated Kernel Classifiers}
 We shall give experimental results performed in \cite{UnderstandKernel} that show the strong generalization performance also appears in kernel classifiers.
 \section{Rationale}

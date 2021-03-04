@@ -12,6 +12,7 @@
 \contentsline {section}{\numberline {2.2}Definition and Properties}{5}{section.2.2}
 \contentsline {section}{\numberline {2.3}Reproducing Kernel Hilbert Spaces}{8}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Representer Theorem}{9}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Gaussian Kernels}{11}{subsection.2.3.2}
 \contentsline {chapter}{\chapternumberline {3}Overfitted and Interpolated Kernel Classifiers}{13}{chapter.3}
 \contentsline {section}{\numberline {3.1}Rationale}{13}{section.3.1}
 \contentsline {section}{\numberline {3.2}Training}{13}{section.3.2}
