@@ -558,7 +558,7 @@ We denote the multi-index vector with its components as $\alpha = (\alpha_1, ...
 
 \section{Interpolation Estimates}
 
-Let $X = \{x_1, ..., x_n\}$  be a set of points that is $\PPP$ unisolvent. For $p_1, .., p_Q$ that form a basis of $\PPP$, let $P = (p_j(x_i)) \in \RR^{n\times Q}$. Let $\Phi$ be a positive definite kernel and $A = (\Phi(x_i, x_j)) \in \RR^{n\times n}$. We let $e^{(j)}$ represent the $j$th unit vector.
+Let $X = \{x_1, ..., x_n\}$ be a set of points that is $\PPP$ unisolvent. For $p_1, .., p_Q$ that form a basis of $\PPP$, let $P = (p_j(x_i)) \in \RR^{n\times Q}$. Let $\Phi$ be a positive definite kernel and $A = (\Phi(x_i, x_j)) \in \RR^{n\times n}$. We let $e^{(j)}$ represent the $j$th unit vector.
 Consider the linear system:
 \begin{equation} \label{eqn:InterpolateMat}
 \begin{pmatrix}
@@ -624,7 +624,7 @@ S(\cdot) &:= (p_1(\cdot),..., p_Q(\cdot))^{\Trans} \in \RR^Q \\
 \end{split}
 \end{equation}
 \begin{thm}
-	For $\Phi$ a positive definite kernel on $\Omega \subseteq \RR^d$ and points $X = \{ x_1,..., x_n \} \subseteq \Omega$ is $\PPP$-unisolvent. There exists functions $v_i^*(\cdot)$ for $i = \{ 1, 2, .., Q \} $ such that for $u^*(x) = (u^*_1(x), ..., u^*_n(x)$ where $u^*_i$ is defined in (\ref{eq:ustar}). we have:
+	For $\Phi$ a positive definite kernel on $\Omega \subseteq \RR^d$ and points $X = \{ x_1,..., x_n \} \subseteq \Omega$ is $\PPP$-unisolvent. There exists functions $v_i^*(\cdot)$ for $i = \{ 1, 2, .., Q \} $ such that for $u^*(x) = (u^*_1(x), ..., u^*_n(x))$ where $u^*_i$ is defined in (\ref{eq:ustar}). we have:
 	\begin{equation} \label{eqn:vstar}
 	\begin{pmatrix}
 	A & P \\
@@ -647,9 +647,9 @@ S(\cdot) &:= (p_1(\cdot),..., p_Q(\cdot))^{\Trans} \in \RR^Q \\
 	\begin{split}
 	P^\Trans \omega &= 0\\
 	\implies \omega^\Trans R(x) &\in V_X\\
-	\omega^\Trans R(\cdot) &= \sum_{i=1}^{n}u_i(\cdot)\omega^\Trans R(x_i) ~~(\because (\ref{eqn:finVx}))\\
+	\omega^\Trans R(\cdot) &= \sum_{i=1}^{n}u_i^*(\cdot)\omega^\Trans R(x_i) ~~(\because (\ref{eqn:finVx}))\\
 	&= \sum_{i=1}^{n} \sum_{j=1}^{n} u_i^*(\cdot) \omega_j \Phi(x_i, x_j) \\
-	&= \gamma^\Trans A u^*(\cdot).\\
+	&= \omega^\Trans A u^*(\cdot).\\
 	\end{split}
 	\end{equation*}
 \end{proof}
@@ -670,7 +670,8 @@ S(\cdot) &:= (p_1(\cdot),..., p_Q(\cdot))^{\Trans} \in \RR^Q \\
 	\end{equation*}
 	Since $X$ is $\PPP$-unisolvent, $v^*(x_i) = 0$.
 \end{proof}
-Also, from Theorem 11.1 of \cite{ScatteredDataApproximation}, we are able to rewrite an interpolant as:
+%Also, from Theorem 11.1 of \cite{ScatteredDataApproximation}, 
+We are able to rewrite an interpolant as:
 \begin{equation} \label{eqn:InterDecomp}
 s_{f,X}(\cdot) = \sum_{i=1}^{n} f(x_i)u_i^*(\cdot).
 \end{equation}
@@ -692,7 +693,7 @@ D^a R(x)\\ D^a S(x)
 
 We will define the power function, as defined in Definition 11.2 in \cite{ScatteredDataApproximation}:
 \begin{defn}
-	Suppose $X \in \RR^d$ is open, with $k: X \times X \rightarrow \RR$ be a positive definite kernel. For $\alpha \in \NN_0^d$, $\hat{X} = {x_1, x_2, ..., x_n} \subseteq X$ the power function $P^{(\alpha)}_{k,\hat{X}}(x)$ is defined by:
+	Suppose $X \subset \RR^d$ is open, with $k: X \times X \rightarrow \RR$ be a positive definite kernel. For $\alpha \in \NN_0^d$, $\hat{X} = \{x_1, x_2, ..., x_n\} \subseteq X$, the power function $P^{(\alpha)}_{k,\hat{X}}(x)$ is defined by:
 	\begin{equation*}
 	\begin{split}
 	(P^{(\alpha)}_{k,\hat{X}}(x))^2 &:= D_1^\alpha D_2^\alpha k(x, x) 
@@ -701,15 +702,14 @@ We will define the power function, as defined in Definition 11.2 in \cite{Scatte
 	\end{split}
 	\end{equation*}
 \end{defn}
-In Theorem 11.4 of \cite{ScatteredDataApproximation}, we have:
 \begin{thm}\label{thm:PowerBound}
 	For an open set $\Omega \subseteq \RR$ and a positive definite kernel $k \subseteq C^{2k}(\Omega \times \Omega)$, and the set of points $X = \{x_1,..., x_n\} \subseteq \Omega$ is $\PPP$-unisolvent. Let $\HH$ be RKHS corresponding to the kernel $k$, a function $f \in \HH$ and its interpolant be $s_{f,X}$. For every $x \in \Omega, a \in \NN_0^d, |a| \leq k$, we have:
 	\begin{equation}
-	|D^af(\cdot) - D^as_{f,X}(\cdot)| \leq P^{a}_{k,X}(\cdot) \norm{f}_{\HH}.
+	|D^af(\cdot) - D^as_{f,X}(\cdot)| \leq P^{(a)}_{k,X}(\cdot) \norm{f}_{\HH}.
 	\end{equation}
 \end{thm}
 \begin{proof}
-	We shall proof the case of $a = 0$, which is the case which will be used in a later theorem.
+	This is proved in Theorem 11.4 of \cite{ScatteredDataApproximation}. We shall proof the case of $a = 0$, which is the case which will be used in a later theorem.
 	First, we note that:
 	\begin{equation*}
 	\begin{split}
@@ -721,7 +721,7 @@ In Theorem 11.4 of \cite{ScatteredDataApproximation}, we have:
 	\begin{equation*}
 	\begin{split}
 	s_{f,X}(x) &= \sum_{i=1}^{n} f(x_i) u_i^*(x) \\
-	&= \sum_{i=1}^{n} u_i^*(x) \inner{f, k(\cdot, x_i)}_\HH ~~ (\because \text{reproduction property}) \\
+	&= \sum_{i=1}^{n} u_i^*(x) \inner{f, k(\cdot, x_i)}_\HH ~~ (\because \text{reproducing 6property}) \\
 	&= \inner{f, \sum_{i=1}^{n}u_i^*(x) k(\cdot, x_i)} \\
 	\implies |f(x) - s_{f,X}(x)| &= | \inner{f, k(\cdot, x)}_\HH -  \inner{f, \sum_{i=1}^{n}u_i^*(x) k(\cdot, x_i)} | \\
 	&= |\inner{f,  k(\cdot, x) - \sum_{i=1}^{n}u_i^*(x) k(\cdot, x_i)}_\HH| \\
@@ -737,31 +737,31 @@ In Theorem 11.4 of \cite{ScatteredDataApproximation}, we have:
 	\]
 \end{defn}
 
-Theorem 11.22 in \cite{ScatteredDataApproximation}:
+%Theorem 11.22 in \cite{ScatteredDataApproximation}:
 \begin{thm} \label{thm:interpolate}
-	Let $\Omega$ be a cube in $\RR^d$ and $k = \phi(\norm{\cdot}_2)$ be a positive definite function with $f = \phi(\cdot)$ satisfying the condition that there exists, $l_0$ and constant $M > 0$ such that for all $r > 0$ and $l > l_0$, $|f^{(l)}(r)| \leq l!M^l$. Then there exists a constant $c > 0$ such that the error between a function $f \in \RKHSGauss$ and its interpolant $s_{f,X}$ for all data points $X = \{x_1, ..., x_n\}$ can be bounded by:
+	Let $\Omega$ be a cube in $\RR^d$ and $k = \phi(\norm{\cdot}_2)$ be a positive definite function with $f = \phi(\cdot)$ satisfying the condition that there exists $l_0$ and constant $M > 0$ such that for all $r \geq 0$ and $l \geq l_0$, $|f^{(l)}(r)| \leq l!M^l$. Then there exists a constant $c > 0$ such that the error between a function $f \in \HH$ (where $\HH$ is the RKHS corresponding to the kernel $k$), and its interpolant $s_{f,X}$ for all data points $X = \{x_1, ..., x_n\}$ can be bounded by:
 	\begin{equation*}
-	\norm{f - s_{f,X}}_{L_\infty(\Omega)} \leq \text{exp}(-c/h_{X,\Omega})|f|_{\RKHSGauss}
+	\norm{f - s_{f,X}}_{L_\infty(\Omega)} \leq \text{exp}(-c/h_{X,\Omega})\norm{f}_{\HH}
 	\end{equation*}
 	with sufficiently small fill $h_{X,\Omega}$.
 \end{thm}
 \begin{proof}
 	From Theorem 11.9 in \cite{ScatteredDataApproximation}, we have:
 	\[ P_{\Phi, X}^2(x) \leq [1 + c_1(2N)]^2 \norm{f - p}_{L_\infty(G)} \]
-	Where $G$ is on the interval $[0, 4(c_2(2N))^2h^2]$, $x \in \Omega$, $p \in \pi_n(\RR)$, $h = h_{X, \Omega}$.
+	Where $G$ is on the interval $[0, 4(c_2(2N))^2h^2]$, $x \in \Omega$, $p \in \pi_N(\RR)$, $h = h_{X, \Omega}$.
 	
-	From Theorem 11.21 in \cite{ScatteredDataApproximation},: we have for sufficiently small fill distance $\fillDist \leq \frac{c_0}{2n}$, there exists a constant $\gamma_d$, where the constants $c_1, c_2$ can be replaced by:
+	From Theorem 11.21 in \cite{ScatteredDataApproximation}, we have for sufficiently small fill distance $\fillDist \leq \frac{c_0}{2N}$, there exists a constant $\gamma_d$, where the constants $c_1, c_2$ can be replaced by:
 	\begin{equation*}
 	\begin{split}
-	c_1(2n) &= \exp(2d\gamma_d(2n+1))\\
-	c_2(2n) &= 2c_2n
+	c_1(2N) &= \exp(2d\gamma_d(2N+1))\\
+	c_2(2N) &= 2c_2N
 	\end{split}
 	\end{equation*}
-	So $G$ is on the interval $[0, 16N^2c_2^2h^2]$
+	So $G$ is on the interval $[0, 16N^2c_2^2h^2]$.\\
 	For $p$ the Taylor series of $f$ about 0, and up to the term $t^N$, we then have:
 	\begin{equation*}
 	\begin{split}
-	|f(t) - p(t)| &\leq t^{N+1}\frac{|f^{n+1}(t')|}{(n+1)!} \\
+	|f(t) - p(t)| &\leq t^{N+1}\frac{|f^{N+1}(t')|}{(N+1)!} \\
 	&\leq M^{N+1}t^{N+1} ~ \text{ (By assumption)} \\
 	\implies {\norm{f - p}}_{L_\infty(G)} &\leq (M \cdot 16N^2c_2^2h^2)^{N+1} \\
 	&= (C_0 N^2 h^2)^{N+1} ~ \text{ for constant }C_0 = Mc_2^2 \\
@@ -800,14 +800,14 @@ Theorem 11.22 in \cite{ScatteredDataApproximation}:
 	\begin{equation*}
 	P^2_{\Phi, X}(x) \leq e^{-(N+1)} \leq e^{-C_3/h}. 
 	\end{equation*}
-	Now, using $C= C_3/2$ and $|f(x) - s_{f, X}(x)| \leq P_{\Phi, X}(x) |f|_{\RKHSGauss}$ (from Theorem (\ref{thm:PowerBound})), we have:
-	\[ |f(x) - s_{f, X}(x)| \leq e^{-C/\fillDist} |f|_{\RKHSGauss}, \]
+	Now, using $C= C_3/2$ and $|f(x) - s_{f, X}(x)| \leq P_{\Phi, X}(x) |f|_{\HH}$ (from Theorem (\ref{thm:PowerBound})), we have:
+	\[ |f(x) - s_{f, X}(x)| \leq e^{-C/\fillDist} |f|_{\HH}, \]
 	which is what we wanted to prove.
 \end{proof}
 
 \begin{thm}
 	With the same conditions as Theorem \ref{thm:interpolate}, except that $f$ satisfies the stricter condition $|f^{(l)}(r)| \leq M^l$, we can get a better error bound of:
-	\[ \norm{f - s_{f,X}}_{L_\infty(\Omega)} \leq \exp(\frac{c \log(\fillDist)}{\fillDist})\norm{f}_{\RKHSGauss}. \]
+	\[ \norm{f - s_{f,X}}_{L_\infty(\Omega)} \leq \exp(\frac{c \log(\fillDist)}{\fillDist})\norm{f}_{\HH}. \]
 \end{thm}
 \begin{proof}
 	The inequality at \ref{eqn:P2bound} becomes:
@@ -867,11 +867,11 @@ i.e. We have a low probability that $\PP(h_{X,\Omega} > r)$ if r grows with resp
 The below theorem gives us some justification as to why the minimum norm interpolating function was chosen, though this only works under noiseless conditions:
 % Might need to rephrase this part to avoid plag
 \begin{thm} \label{thm:approx}
-	Fix $h^* \in \RKHSGauss $  .
+	For $\HH$ an RKHS corresponding to a positive definite kernel, fix $h^* \in \HH$  .
 	Let $(x_1,y_1), ..., (x_n,y_n)$ be i.i.d. random variables where $x_i$ drawn uniformly at random from a compact cube $\Omega \subseteq \mathbb{R}^d $,
-	$y_i = h^*(x_i) \: \forall i$. There exists $A, B > 0$ such that for any interpolating $h \in \mathcal{H}_\infty $ with high probability
+	$y_i = h^*(x_i) \: \forall i$. There exists $A, B > 0$ such that for any interpolating $h \in \HH $ with high probability
 	\begin{equation*}
-	\sup_{x \in \Omega} \abs{h(x) - h^*(x)} A e^{-B(n/ \log n)^{1/d}} (\norm{ h^*}_{\mathcal{H}_\infty} + \norm{h}_{\mathcal{H}_\infty})
+	\sup_{x \in \Omega} \abs{h(x) - h^*(x)} A e^{-B(n/ \log n)^{1/d}} (\norm{ h^*}_{\HH} + \norm{h}_{\HH})
 	\end{equation*}
 \end{thm}
 
@@ -880,33 +880,34 @@ The below theorem gives us some justification as to why the minimum norm interpo
 	\begin{equation*}
 	\begin{split}
 	\norm{f}_{L_\infty(\Omega)} &= \sup_{x \in \Omega} \vert h(x) - h^*(x)\vert \\
-	&< \exp(-c(n/\log n)^{1/d})\norm{f}_{\RKHSGauss} \\
-	&\leq \exp(-c(n/\log n)^{1/d}) (\norm{h^*}_{\RKHSGauss} + \norm{h}_{\RKHSGauss})
+	&< \exp(-c(n/\log n)^{1/d})\norm{f}_{\HH} \\
+	&\leq \exp(-c(n/\log n)^{1/d}) (\norm{h^*}_{\HH} + \norm{h}_{\HH})
 	\end{split}
 	\end{equation*}
 \end{proof}
 Another form we can have is using Proposition 14.1 in \cite{ScatteredDataApproximation}:
 \begin{prop}
-	Let $\Omega \subseteq \RR^d$ be bounded and measurable. Suppose $X = \{x_1, ... , x_N\} \subseteq \Omega$ is quasi-uniform with respect to  $c_{qu} > 0$. Then there exists constants $c_1, c_2 > 0$ depending only on space dimension $d$, on $\Omega$ and on $c_{qu}$ such that:
+	Let $\Omega \subseteq \RR^d$ be bounded and measurable. Suppose $X = \{x_1, ... , x_N\} \subseteq \Omega$ is quasi-uniform with respect to  $c_{qu} > 0$. Then there exists constants $c_1, c_2 > 0$ depending only on$d$, $\Omega$ and on $c_{qu}$ such that:
 	\[c_1N^{-1/d} \leq h_{X,\Omega} \leq c_2N^{-1/d}. \]
 \end{prop}
 With the definition of quasi-uniformness being:
 \begin{defn}
-	For the separation distance of $X = \{x_1, ... , x_N\}$ being defined as $q_x \coloneqq \half \min_{i\neq j} \norm{x_i - x_j}_2$.
+	For the separation distance of $X = \{x_1, ... , x_N\}$ being defined as \[q_X \coloneqq \half \min_{i\neq j} \norm{x_i - x_j}_2. \] $X$ is \textbf{quasi-uniform} with respect to $c_{qu} > 0$ if
+	\[ q_X \leq h_{X,\Omega} \leq c_{qu}q_X \]
 \end{defn}
 We can then use the above proposition with $n$ replacing $n/\log n$ in Theorem \ref{thm:approx} for a better bound of:
-\[ \sup_{x \in \Omega} \abs{h(x) - h^*(x)} < A e^{-B(n)^{1/d}} (\norm{h^*}_{\mathcal{H}_\infty} + \norm{h}_{\mathcal{H}_\infty}) \]
+\[ \sup_{x \in \Omega} \abs{h(x) - h^*(x)} < A e^{-B(n)^{1/d}} (\norm{h^*}_{\HH} + \norm{h}_{\HH}) \]
 if the quasi-uniformness conditions are fulfilled.
 In either case, by choosing a the smallest norm for $h$, we can see that it corresponds to the smallest upperbound for $\vert h(x) - h^*(x)\vert$. \\
-In the next subsection, we have another rationale for choosing a smaller $\norm{h}_{\RKHSGauss}$:
+In the next subsection, we have another rationale for choosing a smaller $\norm{h}_{\HH}$:
 \subsection{Regularity of Functions}
-Let the $\RR$-RKHS $\HH$ consist of functions over $X$. The functions fulfill a Lipschitz-like condition with the Lipschitz constant being the RKHS norm of the function $\norm{f}_{\RKHSGauss}$.\\
+Let the $\RR$-RKHS $\HH$ consist of functions over $X$. The functions fulfill a Lipschitz-like condition with the Lipschitz constant being the RKHS norm of the function $\norm{f}_{\HH}$.\\
 For the positive definite symmetric kernel $k$ corresponding to $\HH$, we have for all $x, x' \in X$:
 \begin{equation*}
 \begin{split}
-|f(x) - f(x')| &= |\inner{f, k(\cdot, x)}_{\RKHSGauss} - \inner{f, k(\cdot, x')}_{\RKHSGauss}| \\
-&= |\inner{f, \Phi(x) - \Phi(x')}_{\RKHSGauss}| ~ \text{ where }  \Phi(x)(\cdot) = k(\cdot, x)\\
-&\leq \norm{f}_{\RKHSGauss} d(x, x'),
+|f(x) - f(x')| &= |\inner{f, k(\cdot, x)}_{\HH} - \inner{f, k(\cdot, x')}_{\HH}| \\
+&= |\inner{f, \Phi(x) - \Phi(x')}_{\HH}| ~ \text{ where }  \Phi(x)(\cdot) = k(\cdot, x)\\
+&\leq \norm{f}_{\HH} d(x, x'),
 \end{split}
 \end{equation*}
 where $d(x, x')$ is the pseudometric defined by:
