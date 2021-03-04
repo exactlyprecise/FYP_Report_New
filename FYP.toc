@@ -30,7 +30,7 @@
 \contentsline {section}{\numberline {5.2}Interpolation Estimates}{25}{section.5.2}
 \contentsline {section}{\numberline {5.3}Approximation Theorem}{32}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}Fill Distance of points in a Cube}{32}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Regularity of Functions}{34}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.2}Regularity of Functions}{35}{subsection.5.3.2}
 \contentsline {chapter}{\chapternumberline {6}Other Notes}{37}{chapter.6}
 \contentsline {section}{\numberline {6.1}Weaknesses}{37}{section.6.1}
 \contentsline {appendix}{\chapternumberline {A}Appendix}{39}{appendix.A}

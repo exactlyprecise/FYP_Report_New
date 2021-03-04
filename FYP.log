@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.1.12)  4 MAR 2021 23:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.1.12)  5 MAR 2021 00:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2214,9 +2214,15 @@ LaTeX Font Warning: Font shape `T3/lmr/m/it' undefined
 LaTeX Warning: Command \: invalid in math mode on input line 872.
 
 \excnt=1
-[33]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [33]
+Underfull \vbox (badness 3343) has occurred while \output is active []
+
+ [34]
 \excnt=1
-[34] [35] [36
+[35] [36
 
 ] [37] [38
 
@@ -2232,7 +2238,7 @@ LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10> not available
 
 LaTeX Warning: File `"Images/Synthetic_Exp.png' not found on input line 950.
 
-<"Images/Synthetic_Exp.png, id=579, 1441.385pt x 684.5575pt>
+<"Images/Synthetic_Exp.png, id=580, 1441.385pt x 684.5575pt>
 File: "Images/Synthetic_Exp.png Graphic file (type png)
 <use "Images/Synthetic_Exp.png>
 Package pdftex.def Info: "Images/Synthetic_Exp.png  used on input line 950.
@@ -2246,7 +2252,7 @@ Overfull \hbox (79.02934pt too wide) in paragraph at lines 950--951
 
 LaTeX Warning: File `"Images/Random_Forests.png' not found on input line 962.
 
-<"Images/Random_Forests.png, id=590, 1332.98pt x 853.1875pt>
+<"Images/Random_Forests.png, id=591, 1332.98pt x 853.1875pt>
 File: "Images/Random_Forests.png Graphic file (type png)
 <use "Images/Random_Forests.png>
 Package pdftex.def Info: "Images/Random_Forests.png  used on input line 962.
@@ -2303,7 +2309,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 970.
 Here is how much of TeX's memory you used:
  26644 strings out of 492982
  448149 string characters out of 6134896
- 598561 words of memory out of 5000000
+ 598558 words of memory out of 5000000
  29386 multiletter control sequences out of 15000+600000
  95415 words of font info for 149 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -2327,10 +2333,10 @@ s/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy5.pfb>
 s/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 symbols/msbm7.pfb>
-Output written on FYP.pdf (52 pages, 1082456 bytes).
+Output written on FYP.pdf (52 pages, 1082721 bytes).
 PDF statistics:
- 755 PDF objects out of 1000 (max. 8388607)
- 660 compressed objects within 7 object streams
+ 756 PDF objects out of 1000 (max. 8388607)
+ 661 compressed objects within 7 object streams
  165 named destinations out of 1000 (max. 500000)
  21296 words of extra memory for PDF output out of 24883 (max. 10000000)
 

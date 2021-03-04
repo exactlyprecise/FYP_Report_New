@@ -876,7 +876,7 @@ The below theorem gives us some justification as to why the minimum norm interpo
 \end{thm}
 
 \begin{proof}
-	We consider $f(x) := h(x) - h^*(x)$. Since $h$ is interpolating, we have $f(x_i) = 0$ for all $x_i$. The interpolant of $f$, $s_{f,X}$ will then be the zero function. Thus, we have:
+	We consider $f(x) := h(x) - h^*(x)$. Since $h$ is interpolating, we have $f(x_i) = 0$ for all $x_i$. The interpolant of $f$, $s_{f,X}$ will then be the zero function. Thus, using Theorem \ref{thm:interpolate}, we have:
 	\begin{equation*}
 	\begin{split}
 	\norm{f}_{L_\infty(\Omega)} &= \sup_{x \in \Omega} \vert h(x) - h^*(x)\vert \\
