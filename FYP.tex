@@ -49,7 +49,7 @@ Special thanks to my research supervisor, Prof. Subhroshekhar Ghosh, for guiding
 	
 \begin{abstract}
 	The bias-variance tradeoff is an important concept of classical Machine Learning practice, where the algorithm tries to balance the error from the bias term and variance term, typically by means of controlling the richness of the model to find a sweet spot between underfitting and overfitting. However, in many modern Machine Learning practices, the model is made to highly overfit the data, even up till the point of near interpolation. This is done even under the conditions of large amounts of data and noise.\\
-	The papers discussed in this thesis show that this happens not only in deep learning, but also kernel machines with close to 0 training error, and why current generalization bounds do not explain such phenomenon well. Additionally, a paper proposes a possible performance curve to explain how overfitting could be beneficial, and some empirical evidence to support this.
+	The papers discussed in this thesis show that this happens not only in deep learning, but also kernel machines with close to 0 training error, and why current generalization bounds do not explain such phenomenon well. Additionally, they propose a possible performance curve to explain how overfitting and overparameterization could be beneficial, and some empirical evidence to support this.
 \end{abstract}
 	
 \tableofcontents
@@ -83,14 +83,14 @@ Many classical bounds have this generalization gap is a form of:
 \EE_{x,y}[l(\hat{h_n}(x), y)] \leq L_{emp}(\hat{h_n}) + O(\sqrt{c/n})
 \end{equation}
 where $c$ is some  measure of the complexity of $\HH$, for example the fat-shattering dimension, VC-dimension, Rademacher complexity, etc. The general result being that, with a greater complexity of the function class $\HH$, the greater the upper bound of this generalization gap. However, if $\HH$ is not complex enough, we may not find any function $\hat{h_n} \in \HH$ that reduces the empirical risk sufficiently (underfitting). Hence, classical algorithms try to find a balance between over and underfitting, decreasing the expected loss by controlling $\HH$, either explicitly or implicitly.
-For example, to change the complexity of $\HH$ explicitly, one might choose a simpler or more complicated architecture for a neural network. To reduce the complexity of $\HH$ implicitly, one might user regularization to  penalize coefficients to limit the model complexity, or simply stop the training algorithm prematurely (early stopping).
+For example, to change the complexity of $\HH$ explicitly, one might choose a simpler or more complicated architecture for a neural network. To reduce the complexity of $\HH$ implicitly, one might use regularization to  penalize coefficients to limit the model complexity, or simply stop the training algorithm prematurely (early stopping).
 
 This classical curve from \cite{Belkin_2019} is shown in Figure \ref{fig:Classical_Descent}.
 \begin{figure}
 	\centering
 	\includegraphics[width=1.2\textwidth]{"Images/Classical_Descent.png}
 	\par
-	\caption{Curve showing how the training and test risk changes with respect to the capacity of $\HH$. The test risk results from bias-variance tradeoff, and the Capacity of $\HH$ is selected at the sweet spot.} \label{fig:Classical_Descent}
+	\caption{Classical U-shaped curve showing how the training and test risk changes with respect to the capacity of $\HH$. The test risk results from bias-variance tradeoff, and the Capacity of $\HH$ is selected at the sweet spot.} \label{fig:Classical_Descent}
 \end{figure}
 
 \section{Modern Machine Learning}
@@ -100,12 +100,12 @@ In \cite{Alfredo2016}, the architectures used on ImageNet have large amounts of 
 \section{Research Question}
 
 Indeed, it is still unanswered as to why these overparameterized data do not seem to cause high test loss due to overfitting. The papers discussed further show empirically that this property is not exclusive to deep learning, but also seems to appear in learning for kernel machines as well. This will be followed by a plausible explanation on how the classical bias-variance tradeoff graph can be reconciled with modern methods.\\
-We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spaces.
+We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spaces, which will then later be used in further sections.
 
 \chapter{Kernels}
 	\section{Notation}
 	We use the symbol $\KK$  when it can refer to both $\RR$ or $\CC$. Also, let $z^*$ or $(z)^*$ denote the conjugate of $z$ for any $z \in \CC$.
-	The sections covering Kernels and reproducing kernel Hilbert spaces are heavily referenced using Steinwart, Christman \cite{steinwartSVM}.
+	The sections covering Kernels and reproducing kernel Hilbert spaces are mainly referenced using \cite{steinwartSVM}.
 	
 	\section{Definition and Properties}
 	\begin{defn}
@@ -126,20 +126,20 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 	Below, we define the Gaussian RBF kernel:
 	\begin{defn}\label{defn:Gaussian_Kernel}
 		Let the complex Gaussian RBF kernel (on $\CC^d$)be defined as:
-		\[ k_{\gamma, \CC^d}(z, z') := e^{-\gamma^{-2} \sum_{i=1}^{d} (z_i - z_i'^*)^2 } .\]
+		\[ k_{\gamma, \CC^d}(z, z') := e^{-\gamma^{-2} \sum_{i=1}^{d} (z_i - z_i'^*)^2 } \]
 		We then define the real Gaussian RBF kernel (or simply the Gaussian RBF kernel for short) acting on $\RR^d$ as:
 		\[ k_\gamma(x, x') = e^{- \gamma^{-2} \norm{x - x'}_2^2}. \]
 	\end{defn}
 	\begin{defn}
 	The Laplacian (or exponential) acting on $\RR^d$ is defined as:
-	\[ k_\gamma(x, x') = e^{- \gamma^{-1} \norm{x - x'}_2}. \]	
+	\[ k_\gamma(x, x') = e^{- \gamma^{-1} \norm{x - x'}_2} \]	
 	\end{defn}
 	It can be shown (\cite{steinwartSVM}) that the complex and real Gaussian RBF kernels and the Laplacian kernel are kernels.
 	\begin{defn}
-		For a non-empty set $X$, a function $k: X \times X \rightarrow \RR$ is said to be a positive definite if, for any $m \in \ZZ^+ \cup \{0\}$ and all $x_1, ..., x_n \in X$, we have the following matrix (called the Gram matrix) being positive semi-definite:
+		For a non-empty set $X$, a function $k: X \times X \rightarrow \RR$ is said to be a positive definite if, for any $m \in \ZZ^+ \cup \{0\}$ and for all $x_1, ..., x_n \in X$, we have the following matrix (called the Gram matrix) being positive semi-definite:
 		\[ K := (k(x_i, x_j))_{i,j}. \]
 		Equivalently: for all $a_1, ..., a_n \in \RR$, we have:
-		\[ \sum_{j=1}^{n} \sum_{i=1}^{n} a_j a_i k(x_j, x_i). \]
+		\[ \sum_{j=1}^{n} \sum_{i=1}^{n} a_j a_i k(x_j, x_i) \geq 0. \]
 	\end{defn}
 	\begin{defn}
 		The positive definite function $k: X \times X \rightarrow \RR$ is said to be symmetric if  $k(x_1, x_2) = k(x_2, x_1)$ for all $x_1, x_2 \in X$
@@ -159,7 +159,7 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		\end{split}
 		\end{equation*}
 		Also, from Lemma \ref{lem:kernelSymm}, we know that the real kernel $k$ is symmetric, proving one side of the theorem. To prove the other side: \\
-		Given $k:X \times X \rightarrow \RR$ a positive definite symmetric function, we prove that $\Phi: X \rightarrow H$ where $x \mapsto k(\cdot, x)$ is a valid feature map for some feature space $H$. First, we define
+		Given $k:X \times X \rightarrow \RR$ a positive definite symmetric function, we shall prove that $\Phi: X \rightarrow H$ with mapping $x \mapsto k(\cdot, x)$ is a valid feature map for some feature space $H$. First, we define
 		\[ \hat{\HH} := \sum_{i=1}^{n} a_i k(\cdot, x_i), n \in \nonNegInt, a_i \in \RR \text{ for all } i, x_i \in X \text{ for all } i. \]
 		For $f, g \in \hat{\HH}$ where $f = \sum_{i=1}^{n}a_i k(\cdot, x_i)$ and $g = \sum_{j=1}^{m}b_j k(\cdot, y_j)$, we define the inner product as such:\
 		\begin{equation} \label{eqn:innerKernel}
@@ -173,14 +173,14 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		We also have: $\inner{f, f} = \sum_{i=1}^{n}\sum_{j=1}^{n}a_i a_j k(x_j, x_i) \geq 0 $ since k is a positive definite function. It can be shown that $\inner{\cdot, \cdot}$ follows Cauhy-Schwarz Inequality (\cite{steinwartSVM}), hence we have:
 		\begin{equation*}
 		\begin{split}
-		|f(x)|^2 &= |\sum_{i=1}^{n}a_ik(\cdot, x_i)|^2 \\
+		|f(x)|^2 &= |\sum_{i=1}^{n}a_ik(x, x_i)|^2 \\
 		&= |\inner{f, k(\cdot, x)}|^2 ~ (\because (\ref{eqn:innerKernel}) \text{ with } g = \sum_{j=1}^{m}b_j k(\cdot, y_j) = k(\cdot, x) \text{ with } m=1, b_1 = 1, y_1 = x)\\
 		&\leq \inner{k(\cdot, x), k(\cdot, x)} ~ \inner{f, f}. 
 		\end{split}
 		\end{equation*}
 		Therefore, if $\inner{f, f} = 0$, then $f = 0$, hence showing that $\inner{f, f} > 0$ if and only if $f \neq 0$. Hence, $\inner{\cdot, \cdot}$ defines a proper inner product in $\hat{\HH}$. \\
 		Let $\HH$ be the completion of $\hat{\HH}$ and the map $U: \hat{\HH} \rightarrow \HH$ be the map where $\inner{Ux, Uy}_{\HH} = \inner{x, y}_{\hat{\HH}} $ for all $x, y \in \hat{\HH}$. Then we have, for all $x, x' \in X$:
-		\[ k(x, x') = \inner{k(\cdot, x'), k(\cdot, x)} _{\hat{\HH}} = \inner{Uk(\cdot, x'), Uk(\cdot, x)}_{\HH} \]. Thus we find a feature map of $k$, proving that $k$ is a kernel.
+		\[ k(x, x') = \inner{k(\cdot, x'), k(\cdot, x)} _{\hat{\HH}} = \inner{Uk(\cdot, x'), Uk(\cdot, x)}_{\HH}. \] Thus we find a feature map of $k$, proving that $k$ is a kernel.
 	\end{proof}
 	
 	\section{Reproducing Kernel Hilbert Spaces} \label{sec:RKHS}
@@ -195,7 +195,7 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 	
 	This is not easy to put into practice, hence the reproducing kernel is defined.
 	\begin{defn} \textbf{(Reproducing Kernel).}
-		For a non-empty set $X$ and a function $k : X \times X \rightarrow \KK$ where $k(\cdot, x) \in \HH$ for all $x \in X$ and the following property hold for all $x in X$ and $f \in \HH$:
+		For a non-empty set $X$ and a function $k : X \times X \rightarrow \KK$ $k$ is called a reproducing kernel of $\HH$ if $k(\cdot, x) \in \HH$ for all $x \in X$ and the following property hold for all $x \in X$ and $f \in \HH$:
 		\begin{equation} \label{eqn:ReproducingProp}
 		f(x) = \inner{f, k(\cdot, x)}
 		\end{equation}
@@ -219,7 +219,7 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		&=  k(x_1, x_2) ~ (\because \text{Reproducing Property } (\ref{eqn:ReproducingProp}))
 		\end{split}
 		\end{equation*}
-		So $\mathcal{H} is also a feature space of k$.
+		So $\mathcal{H}$ is also a feature space of k.
 	\end{proof}
 	\begin{lem}
 		Let $\mathcal{H}$ be an $\KK$-Hilbert functional RKHS over $X$ with reproducing kernel $k$. Then $H$ is a Reproducing Kernel Hilbert Space.
@@ -242,15 +242,16 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 	\subsection{Representer Theorem} \label{subsec:RepThm}
 	Representer Theorem ensures that the argmin of an empirical risk expression involving a function over an RKHS can be expressed as a linear combination of kernels applied on the training data points as proven in \cite{Representer_Theorem}.
 	\begin{thm} \label{thm:Representer}
-		Given a non-empty set $X$, training data $\{(x_1,y_1), ... (x_n,y_n)\} \in X \times \RR$, and RKHS $\mathcal{H}$ be an $\RR$-Hilbert function space over $X$ with reproducing kernel $k:X \times X \rightarrow \RR$. Let $g$ be a strictly increasing function $g:[o, \infty]\rightarrow \RR$, and $l$ be an arbitrary loss function, where $l:(X \times \RR^2)^n \rightarrow \RR \cup \{\infty\}$. \\
+		\textbf{(Representer Theorem).}
+		Given a non-empty set $X$, training data $(x_1,y_1), ... (x_n,y_n) \in X \times \RR$, and RKHS $\mathcal{H}$ a $\RR$-Hilbert function space over $X$ with reproducing kernel $k:X \times X \rightarrow \RR$. Let $g$ be a strictly increasing function $g:[0, \infty]\rightarrow \RR$, and $l:(X \times \RR^2)^n \rightarrow \RR \cup \{\infty\}$ be an arbitrary loss function. \\
 		We want to minimize the following empirical risk term:
-		\[ E(f, (x_1, y_1), ..., (x_n, y_n)) ~ := ~ l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n))) + g(\norm{f}) .\]
-		For $\hat{f} = \arg \min_{f \in \mathcal{H}} E(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ can be represented in the form:
+		\[ L_{emp}(f, (x_1, y_1), ..., (x_n, y_n)) ~ := ~ l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n))) + g(\norm{f}) .\]
+		For $\hat{f} = \arg \min_{f \in \mathcal{H}} L_{emp}(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ can be represented in the form:
 		\[ \hat{f}(\cdot) = \sum_{i=1}^{n} a_i k(\cdot, x_i) \]
-		with $a_i \in \RR$ for all $i$.
+		with $a_i \in \RR$ for $1 \leq i \leq n$.
 	\end{thm}
 	\begin{proof}
-		First we let $\Phi$ be the canonical feature map of $k$ as defined in \ref{def:CanFeatureMaps}. Recall that function $\Phi: X \rightarrow \mathcal{H}$ where $\Phi(x)(\cdot) = k(\cdot , x)$. Due to the reproducing property where $\Phi(x)(x') = \inner{\Phi(x), k(\cdot, x')}$, we have:
+		First we let $\Phi: X \rightarrow \mathcal{H}$ be the canonical feature map of $k$ as defined in (\ref{def:CanFeatureMaps}). Recall that $\Phi(x)(\cdot) = k(\cdot , x)$. Due to the reproducing property where $\Phi(x)(x') = \inner{\Phi(x), k(\cdot, x')}$, we have:
 		\begin{equation*}
 		\begin{split}
 		\Phi(x)(x') &= k(x', x) \\
@@ -258,9 +259,9 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		&= \inner{\Phi(x), \Phi(x')}. 
 		\end{split}
 		\end{equation*}
-		So $\Phi$ is a feature space of $k$. Using orthogonal decomposition, we decompose $f \in \mathcal{H}$ into a component projected onto the span of ${\Phi(x_i), ..., \Phi(x_n)}$, and the other component orthogonal to this span. We will then prove this orthogonal component is $0$ for any $f$ that reduces the empirical risk  term, hence completing the prove.
+		So $\Phi$ is a feature space of $k$. Using orthogonal decomposition, we decompose $f \in \mathcal{H}$ into a component projected onto the span of ${\Phi(x_1), ..., \Phi(x_n)}$, and the other component orthogonal to this span. We will then prove this orthogonal component is $0$ for any $f$ that reduces the empirical risk  term, hence completing the proof.
 		\[ f = \sum_{i=1}^{n} a_i \Phi(x_i) + \gamma, \]
-		where $\gamma \in \mathcal{H}$, $\inner{\Phi(x_i), \gamma} = 0 \text{ for all } i$.\\
+		where $\gamma \in \mathcal{H}$, $\inner{\Phi(x_i), \gamma} = 0 \text{ for all } 1\leq i\leq n$.\\
 		Next, applying the reproducing property again,
 		\begin{equation*}
 		\begin{split}
@@ -279,67 +280,71 @@ We first give a brief introduction on kernels and Reproducing Kernel Hilbert Spa
 		\implies g(\norm{f}) &\geq g(\norm{\sum_{i=1}^{n} a_i \Phi(x_i)})
 		\end{split}
 		\end{equation*}
-		Therefore, if we have $\gamma = 0$, since $f(x_i)$ is unaffected by this for all $i$, 
-		$l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n)))$ is also unaffected by $\gamma$. For the term $g(\norm{f})$, it decreases if we have $\gamma = 0$. Hence,  $\hat{f} = \arg \min_{f \in \mathcal{H}} E(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ must have $\gamma = 0$, and 
+		Therefore, if we have $\gamma = 0$, since $f(x_i)$ is unaffected by this for all $1\leq i\leq n$, and  
+		$l((x_1, y_1, f(x_1)), ..., (x_n, y_n, f(x_n)))$ is also unaffected by $\gamma$. For the term $g(\norm{f})$, it decreases if we have $\gamma = 0$. Hence,  $\hat{f} = \arg \min_{f \in \mathcal{H}} L_{emp}(f, (x_1, y_1), ..., (x_n, y_n))$, $\hat{f}$ must have $\gamma = 0$, and 
 		\begin{equation*}
 		\begin{split}
-		\hat{f} &= \sum_{i=1}^{n} a_i \Phi(x_i) \\
+		\hat{f} &= \sum_{i=1}^{n} a_i \Phi(x_i) + 0 \\
 		&=  \sum_{i=1}^{n} a_i k(\cdot, x_i)
 		\end{split}
 		\end{equation*}
 	\end{proof}
 
-\subsection{Gaussian Kernels}
-Additional discussion of the structure of the Gaussian Kernels and their RKHS is provided in this section. We aim to get the formula corresponding to the RKHS of the Gaussian RBF kernel, as discussed in \cite{steinwartSVM}\\
+%REMOVED PART
 
-For fixed, $\gamma > 0, d \in \ZZ^+$, given a holomorphiuc function $f: \CC^d \rightarrow \CC$, let:
-\begin{equation} \label{eqn:Complex_RKHS_Norm}
-\norm{f}_{\gamma, \CC^d} := \sqrt{\frac{2^d}{\pi^d\gamma^{2d}} \int_{\CC^d} \abs{f(z)^2}\exp(\gamma^{-2}\sum_{j=1}^{d}(z_j - \bar{z}_j)^2)~dz},
-\end{equation}
-where $\bar(z)$ is the complex conjugate of $z$, and $dz$ is the complex Lebesgue measure on $\CC^d$. Also, let:
-\begin{equation} \label{eqn:Complex_RKHS_Struct}
-\HH_{\gamma, \CC^d} := \{ f: \CC^d \rightarrow \CC ~ | f \text{ is holomorphic, } \norm{f}_{\gamma, \CC^d} < \infty \}.
-\end{equation}
-$\HH_{\gamma, \CC^d} $ is a $\CC$ vector space with pre-Hilbert norm in (\ref{eqn:Complex_RKHS_Norm}). Our goal is to show that it corresponds to the RKHS of the complex Gaussian RBF kernel, defined in (\ref{defn:Gaussian_Kernel}), $k_{\gamma, \CC^d}$.
-\begin{thm}
-	For $\gamma > 0, \text{ and } d \in \ZZ^+$, $(\HH_{\gamma, \CC^d}, \norm{f}_{\gamma, \CC^d})$ is an RKHS corresponding to $k_{\gamma, \CC^d}$. Also, define the function:
-	\begin{equation}
-	e_n(z) := \sqrt{\frac{2^n}{\gamma^{2n}n!}}z^n \exp(-\gamma^{-2} z^2), \hspace{2cm} z \in \CC, ~ n \in \naturalzero,
-	\end{equation}
-	and define functions:
-	\begin{equation}
-	e_{n_1} \otimes ... \otimes e_{n_d} (z_1,...,z_d):= \prod_{j=1}^{d} e_{n_j} (z_j) ,
-	\end{equation}
-	Then $(e_{n_1} \otimes ... \otimes e_{n_d})_{n_1,...,n_d \geq 0}$ is an orthonormal basis of $\HH_{\gamma, \CC^d}$.
-\end{thm}
+%\subsection{Gaussian Kernels}
+%Additional discussion of the structure of the Gaussian Kernels and their RKHS is provided in this section. We aim to get the formula corresponding to the RKHS of the Gaussian RBF kernel, as discussed in \cite{steinwartSVM}\\
+%
+%For fixed, $\gamma > 0, d \in \ZZ^+$, given a holomorphiuc function $f: \CC^d \rightarrow \CC$, let:
+%\begin{equation} \label{eqn:Complex_RKHS_Norm}
+%\norm{f}_{\gamma, \CC^d} := \sqrt{\frac{2^d}{\pi^d\gamma^{2d}} \int_{\CC^d} \abs{f(z)^2}\exp(\gamma^{-2}\sum_{j=1}^{d}(z_j - \bar{z}_j)^2)~dz},
+%\end{equation}
+%where $\bar(z)$ is the complex conjugate of $z$, and $dz$ is the complex Lebesgue measure on $\CC^d$. Also, let:
+%\begin{equation} \label{eqn:Complex_RKHS_Struct}
+%\HH_{\gamma, \CC^d} := \{ f: \CC^d \rightarrow \CC ~ | f \text{ is holomorphic, } \norm{f}_{\gamma, \CC^d} < \infty \}.
+%\end{equation}
+%$\HH_{\gamma, \CC^d} $ is a $\CC$ vector space with pre-Hilbert norm in (\ref{eqn:Complex_RKHS_Norm}). Our goal is to show that it corresponds to the RKHS of the complex Gaussian RBF kernel, defined in (\ref{defn:Gaussian_Kernel}), $k_{\gamma, \CC^d}$.
+%\begin{thm}
+%	For $\gamma > 0, \text{ and } d \in \ZZ^+$, $(\HH_{\gamma, \CC^d}, \norm{f}_{\gamma, \CC^d})$ is an RKHS corresponding to $k_{\gamma, \CC^d}$. Also, define the function:
+%	\begin{equation}
+%	e_n(z) := \sqrt{\frac{2^n}{\gamma^{2n}n!}}z^n \exp(-\gamma^{-2} z^2), \hspace{2cm} z \in \CC, ~ n \in \naturalzero,
+%	\end{equation}
+%	and define functions:
+%	\begin{equation}
+%	e_{n_1} \otimes ... \otimes e_{n_d} (z_1,...,z_d):= \prod_{j=1}^{d} e_{n_j} (z_j) ,
+%	\end{equation}
+%	Then $(e_{n_1} \otimes ... \otimes e_{n_d})_{n_1,...,n_d \geq 0}$ is an orthonormal basis of $\HH_{\gamma, \CC^d}$.
+%\end{thm}
+
+
 \chapter{Overfitted and Interpolated Kernel Classifiers}
 We shall give experimental results performed in \cite{UnderstandKernel} that show the strong generalization performance also appears in kernel classifiers.
 \section{Rationale}
-The aim is to have interpolated solutions which fits the data perfectly, thus having no regularization. A form of inductive bias is to be introduced to choose the solution with special properties. Though no finite number of functions in the RKHS are able to fit the training data, minimum norm RKHS solutions can be obtained using Representer Theorem. Some rationale behind choosing the minimum norm solution as the inductive bias is introduced in section \ref{sec:AppThm}.
+The aim is to have interpolated solutions which fits the data perfectly, thus having no regularization. A form of inductive bias is to be introduced to choose the solution with some special properties. Though no finite number of functions in the RKHS are able to fit the training data, minimum norm RKHS solutions can be obtained using Representer Theorem. Some rationale behind choosing the minimum norm solution as the inductive bias is introduced in section \ref{sec:AppThm}.
 \section{Training}
-We have a set of training datapoints $\{ (x_i. y_i), ..., (x_n, y_n) \}, (x_i, y_i) \in \RR^d \times \RR$
+We have a set of training datapoints $(x_1. y_1), ..., (x_n, y_n) \in \RR^d \times \RR$.
 Let $k: \RR^d \times \RR^d \rightarrow \RR$ be a kernel. Let $\HH$ denote the RKHS corresponding to the kernel $k$. Let $f^*$ denote the minimum norm interpolant given the datapoints, i.e.
 \begin{equation*}
 f^* = \arg \min_{f \in \HH, f(x_i) = y_i, 1 \leq i \leq n} (\norm{f}_{\HH}).
 \end{equation*}
 We know that by representer theorem (\ref{thm:Representer}),$f^*$ can be represented in form of:
-\[ f^*(\cdot) = \sum_{i} a^*_i k(x_i, \cdot). \]
-Due to its interpolating properties, we know that for $a^* = (a^*_1, ..., a^*_n)^\Trans$,
+\[ f^*(\cdot) = \sum_{i=1}^{n} a^*_i k(x_i, \cdot). \]
+Due to its interpolating properties, we know that for $a^* := (a^*_1, ..., a^*_n)^\Trans$,
 \begin{equation} \label{eqn:interpolation_solution}
 a^* = K^{-1} (y_1, ..., y_n)^\Trans
 \end{equation}
-for $K \in \RR^{d,d}$ is the matrix where $K_{i,j} = k(x_i, x_j)$.
+where $K \in \RR^{d,d}$ is the matrix where $K_{i,j} = k(x_i, x_j)$.
 We also know that:
 \[ \norm{f^*}_\HH = \sum_{i,j=1}^{n} a^*_i a^*_j k(x_i, x_j) = a^{*\Trans} K a^*. \]
-Due to the time complexity required to solve $a^*$, iterative methods were used in the paper, where:
+Due to the time complexity required to solve $a^*$, iterative methods were used in the paper, where $a^*$ is solved by an unconstrained minimization problem:
 \begin{equation*}
-a^* = \arg \min_{a} \sum_{i} l(Ka, y_i)
+a^* = \arg \min_{a} \sum_{i} l((\sum_{j}a_i k(x_j,x_i)) , y_i)
 \end{equation*}
 for loss function $l$.\\
-The Gaussian RBF kernel and Laplacian RBF kernels were used.
+The Gaussian RBF kernel and Laplacian RBF kernels were used for $k$.
 \section{Results}
 The models were trained till mean square loss on the training dataset approaches zero. It is noted that the benefits of early stopping regularization were little to none in terms of test regression or classification error.\\
-Regardless of using iterative or direct \ref{eqn:interpolation_solution} methods, the interpolated solution performed close to optimal, as seen in the figure \ref{fig:Interpolated_Kernel}.\\
+Regardless of using iterative or direct (\ref{eqn:interpolation_solution}) methods, the interpolated solution performed close to optimal, as seen in the Figure \ref{fig:Interpolated_Kernel}.\\
 This good performance is similar to deep neural networks that interpolate the training data, as seen in sources such as \cite{Zhang_Deep_Learning}.
 
 \begin{figure}
@@ -351,21 +356,15 @@ This good performance is similar to deep neural networks that interpolate the tr
 \end{figure}
 
 \section{Existing Bounds for Interpolated Kernel Classifiers} \label{sec:BoundsKernel}
-We discuss how the norm of the classifiers change with respect to data size when overfitting. Note that in this paper, classifiers are called overfitted if the classification loss for the training set is 0 or near 0, and classifiers are called interpolated when the mean square error is 0 or near 0. Therefore, an interpolated classifier is overfitted, but not necessarily the other way round.\\
-Let $(x_1, y_1),..., (x_n, y_n) \in \Omega \times \{-1, 1\}$ be the training dataset, and $\Omega \in \RR^d$ be bounded. The datapoints are chosen from some probability measure $P$ on $\Omega \times \{-1, 1\}$, and the noise of the function $y$ on $x$ is not noiseless.
+We will discuss how the norm of the classifiers change with respect to data size when overfitting. Note that in this paper, classifiers are called \textbf{overfitted} if the classification loss for the training set is 0 or near 0, and classifiers are called \textbf{interpolated} when the mean square error is 0 or near 0. Therefore, an interpolated classifier is overfitted, but not necessarily the other way round.\\
+Let $(x_1, y_1),..., (x_n, y_n) \in \Omega \times \{-1, 1\}$ be the training dataset, and $\Omega \subset \RR^d$ be bounded. The datapoints are chosen from some probability measure $P$ on $\Omega \times \{-1, 1\}$, and the noise of the function $y$ on $x$ is nonzero.
 \begin{defn}
-	For a function $h \in \HH$ t-overfits data, where $t \in \RR^+$, if it is overfitted with 0 classification loss, and $y_ih(x_i) > t > 0$ for $1\leq i \leq n$.
+	For a function $h \in \HH$, and $t \in \RR^+$, it \textbf{t-overfits} the data if it is overfitted with 0 classification loss, and $0 < t< y_ih(x_i)$ for $1\leq i \leq n$.
 \end{defn}
-This condition is still weaker than interpolation, which requires $h(x_i) = y_i$. The rationale for introducing t-overfitting is that any overfitted classifier can be scaled by a factor of $1/\gamma$ to reduce the norm by a factor of $\gamma$, so any overfitted classifier may have an arbitrarily small norm.
+This condition is still weaker than interpolation, which requires $h(x_i) = y_i$, but still stronger than overfitting. The rationale for introducing t-overfitting is that any overfitted classifier can be scaled by a factor of $1/\gamma$ to reduce the norm by a factor of $\gamma$, so any overfitted classifier may have an arbitrarily small norm. Hence, this additional constraint has to be added.
 
-\cite{UnderstandKernel} suggests a theorem on how the norm of the function in the RKHS changes with respect to t-overfitting.
-\begin{thm} \label{thm:normBound}
-	For $(x_1 ,y_1),..., (x_n,x_n) \in \Omega \times \{-1, 1\}$ be data sampled from probability distribution $P$, and $y$ is not a deterministic function of $x$. With high probability, any $h$ that t-overfits the data, there exists some constants  $A, B > 0$ depending on $t$, that satisfies
-	\[\norm{h}_\HH > Ae^{Bn^{1/d}}. \]
-\end{thm}
-
-The proof of this theorem makes use of $\gamma$-shattering and fat-shattering dimension as defined below:
 \begin{defn}
+	\textbf{($\gamma$-shattering and the fat-shattering dimension)}.
 	Let F be a set of functions of $f: \Omega \rightarrow \RR$ and $S = \{x_1, x_2, ..., x_n\} \subseteq \Omega$, and $\gamma \in \RR^+$. Then we say $S$ is $\gamma$-shattered by F if there exists $r_1, r_2,..., r_n \in \RR$ such that for each $b \in \{0, 1\}^n$ there is a function $f_b \in F$ such that
 	\begin{equation*}
 	\begin{split}
@@ -376,11 +375,17 @@ The proof of this theorem makes use of $\gamma$-shattering and fat-shattering di
 	We say $r = (r_1, r_2,..., r_n)$ witnesses the shattering.
 	Also, we say that $F$ has $\gamma$-dimension $D$ if $D$ is the maximum	cardinality of a subset $S$ of $\Omega$ that is $\gamma$-shattered by $F$. If no such maximum exists, we say that $F$ has infinite $\gamma$-dimension. The $\gamma$-dimension of $F$ is denoted $fat_F(\gamma)$. This defines a function $fat_F: \RR \rightarrow \NN \cup \{0,\infty\}$, which we call the fat-shattering dimension of $F$.
 \end{defn}
-Now to prove Theorem \ref{thm:normBound}:
+
+\cite{UnderstandKernel} suggests a theorem on how the norm of the function in the RKHS changes with respect to t-overfitting.
+\begin{thm} \label{thm:normBound}
+	Let $(x_1 ,y_1),..., (x_n,x_n) \in \Omega \times \{-1, 1\}$ be data sampled from probability distribution $P$, and $y$ is not a deterministic function of $x$. With high probability, for any $h$ that t-overfits the data, there exists some constants  $A, B > 0$ depending on $t$, that satisfies
+	\[\norm{h}_\HH > Ae^{Bn^{1/d}}. \]
+\end{thm}
+
 \begin{proof}
-	Let $L(f) = \EE_P[l(f(x), y)]$.
+	Let $L(f) := \EE_P[l(f(x), y)]$, the expected classification error.
 	Let $B_R = \{ f \in \mathcal{H},~ \norm{f}_\mathcal{H} < R \}$ be a ball of radius $R$ in RKHS $\mathcal{H}$. Suppose the data is $\gamma$-overfitted. \cite{LossFATBound} gives us a high probability of a bound of
-	\[ L(f) < O(\frac{\text{ln}(n)^2}{\sqrt{n}}\sqrt{fat_{B_R}(\gamma/8)}) \] for $L(f)$ the expected classification error. Thus, we have:
+	\[ L(f) < O(\frac{\text{ln}(n)^2}{\sqrt{n}}\sqrt{fat_{B_R}(\gamma/8)}). \] Thus, we have:
 	\[ fat_{B_R}(\gamma) \gtrapprox O(n ~L(f)^2). \]
 	Also, from \cite{ApproximationConcentration} we have \[fat_{B_R}(\gamma) < O((\log(R/\gamma))^d).\]
 	We then have $B_R$ containing no function that $\gamma$ overfits the data unless
@@ -388,7 +393,7 @@ Now to prove Theorem \ref{thm:normBound}:
 	\begin{split}
 	(\log(R/\gamma))^d &> O(n) \\
 	\implies log(R/\gamma) &> O(n^{1/d}) \\
-	\implies R &> c_1 \text{ exp}(c_2(n)^{1/d})
+	\implies R &> c_1 \text{ exp}(c_2n^{1/d})
 	\end{split}
 	\end{equation*}
 	for some positive constants $c_1, c_2$. Therefore, there exists some constants $A, B \in \RR^+$ such that $\norm{h}_\HH > Ae^{Bn^{1/d}}$. 
@@ -401,8 +406,8 @@ This shows that current bounds are insufficient to explain performance on interp
 \chapter{Double Descent}
 
 \section{Double Descent Curve}
-As proposed in \cite{Belkin_2019}, a way to reconcile the classical Machine Learning curve with modern machine overparemeterization practice is the double descent curve. As seen in the figure \ref{fig:Double_Descent}, the first part of the curve, when the capacity of $\HH$ (which is a general term, and can mean things like the VC-Dimension. In this case, we take it to be the number of free parameters in the model) is smaller, it resembles the classical U-shaped curve. However, when the capacity of $\HH$ increases further, the test risk hits a maximum (typically at the point of interpolation), and further increase of capacity of $\HH$ decreases the test risk, sometimes to the point of the graph going below the minimum of the initial U-shaped curve itself. \\
-This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in section \ref{sec:RFF_Exp}. Some other experimental demonstrations of the double descent curve aredescribed in the appendix, for random forests, and with artificial data and noise.
+As proposed in \cite{Belkin_2019}, a way to reconcile the classical Machine Learning curve with modern machine overparemeterization practice is the double descent curve. As seen in the Figure \ref{fig:Double_Descent}, in the first part of the curve, when the capacity of $\HH$ (the number of free parameters in the model in this case) is smaller, it resembles the classical U-shaped curve. However, when the capacity of $\HH$ increases further, the test risk hits a maximum (typically at the point of interpolation), and further increase of capacity of $\HH$ decreases the test risk, sometimes to the point of the graph going below the minimum of the initial U-shaped curve itself. \\
+This curve is observed empirically in several significant models such as neural networks and many different datasets. The paper by Belkin  provides several examples, including small Neural Networks and Random Forests, etc., and we will focus on one of them, in Section \ref{sec:RFF_Exp}. Some other experimental demonstrations of the double descent curve are described in the Appendix \ref{chpt:Appendix}, for random forests (\ref{sec:RandomForests}), and with artificial data and noise (\ref{sec:AritificialData}).
 
 \begin{figure}
 	\centering
@@ -414,34 +419,34 @@ This curve is observed empirically in several significant models such as neural 
 \pagebreak
 
 \section{Random Fourier Features} \label{sec:RFFs}
-For a feature map $\phi: \RR^d \rightarrow \RR^{d'}$ the kernel trick allows easy computation for positive definite kernel $k$ where $k(x,y) = \inner{\phi(x),\phi(y)}$. We want to find a randomized feature map $z: \RR^d \rightarrow \RR^{\bar{d}}$ such that 
+For a feature map $\phi: \RR^d \rightarrow \RR^{d'}$, the kernel trick allows easy computation for positive definite kernel $k$ where $k(x,y) = \inner{\phi(x),\phi(y)}$. We want to find a randomized feature map $z: \RR^d \rightarrow \RR^D$ such that 
 \begin{equation*}
 \begin{split}
-k(x,y) &= <\phi(x), \phi(y)> \\
-&\approx <z^{\Trans}(x), z(y)>.
+k(x,y) &= \inner{\phi(x), \phi(y)} \\
+&\approx \inner{z^{\Trans}(x), z(y)}.
 \end{split}
 \end{equation*}
-As suggested by \cite{RFF_Rahimi}, for a shift-invariant kernel $k$: $k(x, y) = k(x - y)$), we consider the mapping $z(x) = cos(w^{\Trans}x + b)$, where $w$ is drawn from the probability distribution $p$:
+As suggested by \cite{RFF_Rahimi}, for a shift-invariant kernel $k$ (where $k(x, y) = k(x - y)$), we consider the mapping $z(x) = cos(w^{\Trans}x + b)$, where $w$ is drawn from the probability distribution $p$:
 \begin{equation}
 p(w) = \frac{1}{2\pi} \int k(h) ~ \text{exp}(-iw^{\Trans}h) ~ \text{d}h
 \label{eq:probFourier}
 \end{equation} 
 
-when we compute the Fourier transform of the kernel $k$, and $b$ is drawn from the uniform distribution on $[0, 2\pi]$.
+when we compute the Fourier transform of the (properly scaled) kernel $k$, and $b$ is drawn from the uniform distribution on $[0, 2\pi]$.
 
 We know that the fourier transform of $k(\cdot)$ is a probability distribution from Bochner's theorem:
 \begin{thm} \label{thm:Bochner}
 	(Bochner \cite{Rudin_1990}).For a continuous kernel $k(x - y)$  it is a positive definite kernel if and only if $k(\cdot)$ is the fourier transform of a non-negative measure.
 \end{thm}
-
+As will be used in the next section, note that: For $k(\Delta) = \exp(- \norm{\Delta}_2^2 /2)$, $p(w) = (2\pi)^{-d/2} \exp(-\norm{w}_2^2/2)$.\\
 We now have:
 \[ k(x - y) = \int_{\RR^d} p(w) \text{exp}(iw^{\Trans}(x - y)) ~ \text{d}w = \EE_w[e^{iw^{\Trans}x}(e^{iw^{\Trans}y})^*]. \]
 Therefore, we can use $e^{iw^{\Trans}x}(e^{iw^{\Trans}y})^*$ as an (unbiased) estimate of $k(x, y)$.
 Let $\phi_w(x) = e^{iw^{\Trans}x}$
 We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, as suggested by \cite{RFF_Rahimi}.
 \begin{prop}
-	For $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$, where $w$ is drawn from probability distribution $p$ in \eqref{eq:probFourier} and $b$ drawn from a uniform random variable on $[0, 2\pi]$.
-	\[E(z_w(x))z_w(y) = k(x,y)\]
+	For $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$, where $w$ is drawn from probability distribution $p$ in \eqref{eq:probFourier} and $b$ drawn from a uniform random variable on $[0, 2\pi]$,
+	\[\EE_w[z_w(x) z_w(y)] = k(x,y)\]
 \end{prop}
 \begin{proof}
 	\begin{equation*}
@@ -451,7 +456,7 @@ We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, 
 	&= \frac{1}{\sqrt{2}}~(\phi_w(x)e^{ib} + \phi_w(x)^* e^{-ib})
 	\end{split}
 	\end{equation*}
-	Where $\phi_w(x) = e^{iw^{\Trans}x}$.
+	where $\phi_w(x) = e^{iw^{\Trans}x}$, and $z^*$ is the complex conjugate of $z$.
 	\begin{equation*}
 	\begin{split}
 	z_w(x)z_y(y) &= \frac{1}{2}[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b} \\
@@ -469,7 +474,7 @@ We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, 
 	&= \frac{1}{2}\EE[\phi_w(x)\phi_w(y)e^{i2b} + \phi_w(x)^*\phi_w(y)^*e^{-i2b}] + k(x-y)
 	\end{split}
 	\end{equation*}
-	For real kernel , $k(x - y) = (k(x - y))^*$.
+	Since $k$ is a real kernel, $k(x - y) = (k(x - y))^*$.
 	\begin{equation*}
 	\begin{split}
 	\EE_{w,b}[\phi_w(x)\phi_w(y)e^{i2b}] &= \frac{1}{2\pi}\int_{\RR^d}\int_{0}^{2\pi} p(w)\phi_w(x)\phi_w(y)e^{i2b} \text{d}b~\text{d}w \\
@@ -483,8 +488,7 @@ We can also use $z_w(x) = \sqrt{2}cos(w^{\Trans}x + b)$ instead of $\phi_w(x)$, 
 \end{proof}
 The variance of the estimate is decreased by using $z$, a $D$ dimensional vector by concatenating $D$ of $z_w$ and normalizing by a constant $\sqrt{D}$. We let:
 \[z(x) = \sqrt{\frac{2}{D}} [cos(w_1^{\Trans}x + b_1) ... cos(w_D^{\Trans}x + b_D)] \]
-with randomly drawn $w_i$ and $b_i$ as described previously.
-
+with randomly drawn $w_i$ and $b_i$ as described previously. \\
 \section{Experiment} \label{sec:RFF_Exp}
 \subsection{Function Class}
 Assume we have datapoints $\{(x_j, y_j)\}_{1 \leq j \leq n}$, where $x_j \in \RR^d$, $y_j \in \RR$.\\
@@ -496,7 +500,7 @@ Where $w_1,..., w_N \in \RR^d$ are sampled independently from the standard Gauss
 Choose $a = (a_1,..., a_N)$ only through minimization of the square loss, i.e.
 \[ \min_{a} \frac{1}{n} \sum_{k=1}^{n}(h_N(x_k) - y_k)^2. \]
 However, when the minimizer is not unique (which will be the case when $N > n$), choose $a$ such that it has the smallest L2-norm out of all the minimizers. \\
-This choice of norm for $a$ is meant to be similar to the RKS norm $\norm{h}_{\HH_\infty}$. Below, we give a sketch as to the reason:
+This choice of norm for $a$ is meant to be similar to the RKS norm $\norm{h}_{\HH_\infty}$. Below, we give some intuition to the reasoning:
 
 	Let $f(x)$ be the minimum norm RKHS interpolant function for the datapoints. 
 	\begin{equation*}
@@ -531,30 +535,30 @@ The initial part of the curve as $N < n$ follows a standard U-shaped descent cur
 
 \section{Plausible Explanations}
 Why does the test risk decrease even when increasing $N$ after the point of interpolation?\\
-If we look at equation (\ref{eqn:Generalization_Gap}), it seems counter-intuitive to increase the complexity of the function class after the point of interpolation. Afterall the $L_{emp}$ remains at 0, while the complexity of $\HH$ increases, thus increasing the upper bound of the generalization gap. It seems that this upper bound is insufficient in explaining the decrease in test risk.\\
-An explanation given by the paper is that the capacity of the function class might not be a good inductive bias (or a good indicator for the inductive bias) for the problem. For example, if the inductive bias is a smooth function, or a smaller norm, or a larger margin (for classification), then by considering a class with a wider range of fucntions, the algorithm may find a function that is able to better fit that inductive bias.\\
+If we look at equation (\ref{eqn:Generalization_Gap}), it seems counter-intuitive to increase the complexity of the function class after the point of interpolation. After all, the $L_{emp}$ remains at 0, while the complexity of $\HH$ increases, thus increasing the upper bound of the generalization gap. It seems that this upper bound is insufficient in explaining the decrease in test risk.\\
+A plausible explanation is that the capacity of the function class might not be a good inductive bias (or a good indicator for the inductive bias) for the problem. For example, if the inductive bias is a smooth function, or a smaller norm, or a larger margin (for classification), then by considering a class with a wider range of fucntions, the algorithm may find a function that is able to better fit that inductive bias.\\
 For example, in the case of the experiment presented, we are able to find $a$ with smaller L2-norm when we increase $N$, as was shown in the Figure \ref{fig:RFF_Exp}, which might explain the decrease of test risk.
 
 \chapter{Approximation and Estimation}
-\section{Notations} \label{sec:Notations}
+\section{Notations and Definitions} \label{sec:Notations}
 
 Let $\pi_m(\RR^d)$ be a multivariate polynomial with $d$ variables and degree $\leq m$, i.e. 
 \[ \pi_m(\RR^d) = \{ p(x) = \sum_{k \leq m} c_k x^k \} \] 	
 \\
 Let $C^k(X)$ be the set of functions on $X$ that are $k$ times continuously differentiable. \\
 For a point $x \in \RR^d$, it has the components of its coordinates $\chi_1, .., \chi_d$, whereas we represent $n$ points in $\RR^d$ as $x_1, .., x_n$.\\
-We denote $\NN_0$ as the set of non-negative integers.
-We denote the multi-index vector with its components as $\alpha = (\alpha_1, ..., \alpha_d)^\Trans \in \NN_{0}^{d}$, and $|\alpha| := \norm{\alpha}_1$ For $X \subseteq \RR^d$, $f \in C^k(X)$, $|\alpha| \leq k$ and $x \in \RR^d$, we denote:
+We denote $\NN_0$ as the set of non-negative integers.\\
+We denote the multi-index vector with its components as $\alpha = (\alpha_1, ..., \alpha_d)^\Trans \in \NN_{0}^{d}$, and $|\alpha| := \norm{\alpha}_1$.\\ For $X \subseteq \RR^d$, $f \in C^k(X)$, $|\alpha| \leq k$ and $x \in \RR^d$, we denote:
 \[ D^\alpha f := \frac{\partial^{|\alpha|}}{\partial\chi_1^{\alpha_1} \cdot\cdot\cdot \partial\chi_d^{\alpha_d}} f \]
 
 \begin{defn}
-	Consider the set of points $X = {x_1, ..., x_n} \subseteq \RR$ and $\pi_m(\RR^d)$ with $n \geq \dim(\pi_m(\RR^d)$. $X$ is called $\pi_m(\RR^d)$-unisolvent if there is no polynomial in $\pi_m(\RR^d)$ (besides the zero polynomial) that is zero on all the points.
+	Consider the set of points $X = \{x_1, ..., x_n\} \subseteq \RR^d$ and $\pi_m(\RR^d)$ with $n \geq \dim(\pi_m(\RR^d))$. $X$ is called $\pi_m(\RR^d)$-unisolvent if there is no polynomial in $\pi_m(\RR^d)$ (besides the zero polynomial) that is zero on all the points.
 \end{defn}
 
 
 \section{Interpolation Estimates}
 
-Let $X = {x_1, ..., x_n} \subseteq \RR$  be a set of points that is $\PPP$ unisolvent. For $p_1, .., p_Q$ that form a basis of $\PPP$, let $P = (p_j(x_i)) \in \RR^{n\times Q}$. Let $\Phi$ be a positive definite kernel and $A = (\Phi(x_i, x_j)) \in \RR^{n\times n}$. We let $e^{(j)}$ represent the $j$th unit vector.
+Let $X = \{x_1, ..., x_n\}$  be a set of points that is $\PPP$ unisolvent. For $p_1, .., p_Q$ that form a basis of $\PPP$, let $P = (p_j(x_i)) \in \RR^{n\times Q}$. Let $\Phi$ be a positive definite kernel and $A = (\Phi(x_i, x_j)) \in \RR^{n\times n}$. We let $e^{(j)}$ represent the $j$th unit vector.
 Consider the linear system:
 \begin{equation} \label{eqn:InterpolateMat}
 \begin{pmatrix}
@@ -914,17 +918,17 @@ It has been oberved in earlier papers (for example, \cite{Shalev_Shwartz_2010}) 
 
 \section{Weaknesses}
 The double descent curve is harder to observe in multilayer neural networks. One of the reasons being that it is very sensitive to initialization when the model is underparameterized.\\
-Also as shown in \cite{Belkin_Overfitting}, adversarial examples are unavoidable when using interpolation learning in non-deterministic data labels. As the sample size increases, the adversarial cases are asymptotically dense, so there is always an adversarial example arbitrarily close to any point.
+Also, as shown in \cite{Belkin_Overfitting}, adversarial examples are unavoidable when using interpolation learning in non-deterministic data labels. As the sample size increases, the adversarial cases are asymptotically dense, so there is always an adversarial example arbitrarily close to any point.
 
 
 % If you want to include appendices, just use the \appendix command and then make chapters as normal
 \appendix
-\chapter{Appendix}
-\section{Results with Artificial Data and Noise}
+\chapter{Appendix} \label{chpt:Appendix}
+\section{Results with Artificial Data and Noise} \label{sec:AritificialData}
 \subsection{Setup}
-The paper looks at the double descent surve  in the situation of artificial data. Define a function $e_k: [0, 2\pi] \rightarrow \CC$ where
+The paper looks at the double descent curve in the situation of artificial data. Define a function $e_k: [0, 2\pi] \rightarrow \CC$ where
 \[ e_k(\cdot) := \exp(\sqrt{-1}(k - 1) \cdot) \]
-where $k \in \ZZ^+$. Define a probability distribution $p$ on the set of positive integers. Denote $p_k = \PP(k), j \in \ZZ^+$.
+where $k \in \ZZ^+$. Define a probability distribution $p$ on the set of positive integers. Denote $p_k = \PP(k), k \in \ZZ^+$.
 Let the target function be
 \[ h^*(\cdot) = \sum_{k \in \ZZ^+} a^*_k e_k(\cdot)\]
 and we let $a_k^* := p_k \forall k$. The datapoints $(x_1, y_1), ..., (x_n, y_n)$ be $x_j \in [0, 2\pi]$ and 
@@ -937,7 +941,7 @@ The function class $\HH_N$ is randomly chosen by:
 	\item Choose $N$ positive integers $k_1,..., k_N$ sampling from $p$ independently.
 	\item Consider the span of the functions $\{ e_{k_1},..., e_{k_N} \}$ as the function class $\HH_N$.
 \end{itemize}
-The regime of choosing the function from the function class is similar to what was used in the RFF experiment \ref{sec:RFF_Exp}. Choose the function smallest square error in the training data. When the training error is 0 (when $N \geq n$), choose the smallest norm function with 0 least squares error, where the norm of the function $h = \sum_{j=1}^{N} a_{k_j} e_{k_j} $is defined as: $\norm{h}^2_\HH = \sum_{k}\frac{a_k}{p_k}$.
+The regime of choosing the function from the function class is similar to what was used in the RFF experiment \ref{sec:RFF_Exp}. Choose the function with the smallest square error in the training data. When the training error is 0 (when $N \geq n$), choose the smallest norm function with the 0 error, where the norm of the function $h = \sum_{j=1}^{N} a_{k_j} e_{k_j} $is defined as: $\norm{h}^2_\HH = \sum_{k}\frac{a_k}{p_k}$.
 \subsection{Results}
 The experiment was repeated over multiple $n$, multiple SNR (by varying $\sigma$), and repeated 20 times, and the double descent curves were observed. An example shown is in Figure \ref{fig:Synthetic_Exp}.
 \begin{figure}
@@ -946,10 +950,10 @@ The experiment was repeated over multiple $n$, multiple SNR (by varying $\sigma$
 	\par
 	\caption{Left: Noiseless labels. Right: SNR=20. Top: Test MSE. Bottom: norm of function $\norm{h}_\HH$.} \label{fig:Synthetic_Exp}
 \end{figure}
-\section{Results with Random Forests}
+\section{Results with Random Forests} \label{sec:RandomForests}
 \subsection{Setup}
 The (real life) training data are trained using random forests for regression problems, as described in \cite{Breiman_2001}. The number of features to be selected when splitting a node is the square root of the number of total features. The maximum number of leaves in each tree (denoted by $N_{leaf}^{max}$), and the number of trees (denoted by $N_{tree}$) are varied to change the capacity of the function class. There is also no constraints on the depth of each tree, or when to split the tree node.
-At most $n$ nodes is required for a tree to interpolate $n$ samples (though the tree tends to interpolate with fewer leaves).\\
+At most $n$ leaves is required for a tree to interpolate $n$ samples (though the tree tends to interpolate with fewer leaves).\\
 Training data was interpolated in 2 different ways. In Figure \ref{fig:Random_Forests} (A), the experiments were run with no bootstrap re-sampling, as describe in \cite{Cutler_2001}. In (B), the same experiments were run with bootstrap re-sampling. Note that the training data can be interpolated with a single tree with no bootstrap re-sampling, but have to be interpolated with multiple trees with bootstrap resampling.\\
 As we can see in the figure, the double descent curve can be observed in both cases, though they tend to be less obvious in the zero-one loss graphs.
 \begin{figure}
